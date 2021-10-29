@@ -8,8 +8,10 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class utilisateur{
 
-	/** @Id @Column(type="integer")
-	 *  @GeneratedValue
+	/** 
+	 * @Id 
+	 * @Column(type="integer")
+	 * @GeneratedValue
 	 */ 
 	public $id;
 
