@@ -1,4 +1,8 @@
+<?php error_reporting(0); ?>
+
 <?php
+
+
 //nom de l'application
 $nameApp = "monApplication";
 

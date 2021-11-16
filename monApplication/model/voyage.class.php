@@ -6,7 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @Entity
  * @Table(name="jabaianb.voyage")
  */
-class utilisateur{
+class voyage{
 
 	/** 
 	 * @Id 
@@ -15,10 +15,16 @@ class utilisateur{
 	 */ 
 	public $id;
 
-	/** @Column(type="integer") */ 
+	/**
+	 * @ManyToOne(targetEntity="utilisateur")
+	 * @JoinColumn(name="conducteur", referencedColumnName="id")
+	 */ 
 	public $conducteur;
 		
-	/** @Column(type="string", length=45) */ 
+	/** 
+	 * @ManyToOne(targetEntity="trajet")
+	 * @JoinColumn(name="trajet", referencedColumnName="id")
+	 */ 
 	public $trajet;
 
 	/** @Column(type="string", length=45) */ 

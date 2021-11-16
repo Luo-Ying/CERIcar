@@ -16,7 +16,7 @@
      <?php endif; ?>
 
     <div id="page">
-      <?php if($context->error): ?>
+      <?php if($context->error): ?> 
       	<div id="flash_error" class="error">
         	<?php echo " $context->error !!!!!" ?>
       	</div>
