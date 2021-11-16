@@ -20,9 +20,9 @@ class trajetTable{
         $em = dbconnection::getInstance()->getEntityManager() ;
         
 		$trajetRepository = $em->getRepository('trajet');
-        echo "ok";
 		$trajet = $trajetRepository->findOneBy(array('depart' => $depart, 'arrivee' => $arrivee));	
-
+        // echo "<br>ok<br>";
+        
         if($trajet == false){
             echo 'Erreur sql';
         }

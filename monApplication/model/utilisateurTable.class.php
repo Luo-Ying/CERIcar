@@ -19,6 +19,22 @@ class utilisateurTable {
 		return $user; 
 	}
 
+	public static function getUserById($id){
+
+		$em = dbconnection::getInstance()->getEntityManager();
+
+		$userRepository = $em->getRepository('utilisateur');
+
+		$user = $userRepository->findOneBy(array('id' => $id));
+
+		if($user == false){
+			echo 'Erreur sql';
+		}
+
+		return $user;
+
+	}
+
   
 }
 
