@@ -13,11 +13,11 @@
         <h1 class="w3-jumbo w3-animate-top">CERI CAR</h1>
         <hr class="w3-border-grey" style="margin:auto;width:40%">
         <p class="w3-large w3-center">Didi, good travel!</p>
-        <form class="search-form" method="POST" action="monApplication.php?action=voyages">
-            <input type="text" id="case_depart" name="depart" placeholder="Départ"><br>
-            <input type="text" id="case_destination" name="arrivee" placeholder="Destination"><br>
+        <form id="searchVoyages-form" method="POST" action="monApplication.php?action=searchVoyages">
+            <input type="text" id="case-depart" name="depart" placeholder="Départ"><br>
+            <input type="text" id="case-destination" name="arrivee" placeholder="Destination"><br>
             <!-- <input type="date" id="case_date" name="" min=""><br> -->
-            <button type="submit" id="btn_Rechercher"><i class='fa fa-search' id='i-advanced-search-i'></i> Rechercher</button>
+            <button type="submit" id="btn-Rechercher-voyages"><i class='fa fa-search' id='i-advanced-search-i'></i> Rechercher</button>
         </form>
     </div>
     <!-- <div id="start"><a href="" style="text-decoration: none; font-size: 25px;">start</a></div>

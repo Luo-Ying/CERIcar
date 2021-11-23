@@ -11,14 +11,19 @@ body, html {height: 100%}
   background-size: cover;
 }
 
-
-#case_depart, #case_destination, #btn_Rechercher, #case_date{
-  /* width: 300px; */
-  height: 50px;
+.nav{
+  display: flex; 
+  align-items:flex-end;
 }
 
-#case_depart, #case_destination, #btn_Rechercher{
+/* #case-depart, #case-destination, #btn-Rechercher-voyages, #case_date{ */
+  /* width: 300px; */
+  /* height: 50px; */
+/* } */
+
+#case-depart, #case-destination, #btn-Rechercher-voyages{
   width: 300px;
+  height: 50px;
 }
 
 .voyageCard-mainContainer{
@@ -30,7 +35,7 @@ body, html {height: 100%}
   border-radius: 20px;
   margin: auto;
   padding-top: 25px;
-  background-color: white;
+  background-color: rgb(255, 255, 255);
   /* font-color:black; */
   color: black;
   display: flex;

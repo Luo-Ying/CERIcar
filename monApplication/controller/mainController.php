@@ -10,27 +10,6 @@ class mainController
 		return context::SUCCESS;
 	}
 
-	// public static function BE($request,$context)
-	// {
-	// 	$context->error="I'm so cute";
-	// 	return context::ERROR;	//context: ERROR
-	// }
-
-	// public static function BEnone($request,$context)
-	// {
-	// 	$context->error="I'm so cute";
-	// 	return context::NONE;	//context: NONE
-	// }
-
-	// public static function superTest($request,$context)
-	// {
-	// 	$context->mavariable1=$_GET["mavariable1"];
-	// 	$context->mavariable2=$_GET["mavariable2"];
-	// 	// $context->er
-	// 	return context::SUCCESS;
-	// }
-
-
 	public static function index($request,$context){
 		// echo "ok";
 		return context::SUCCESS;
@@ -73,7 +52,7 @@ class mainController
 		}
 	}
 
-	public static function voyages($request, $context){
+	public static function searchVoyages($request, $context){
 		// echo "ok<br>";
 		mainController::trajetTest($request, $context);
 		$voyages = voyageTable::getVoyagesByTrajet($context->trajet);
@@ -91,7 +70,7 @@ class mainController
 		if(isset($request['idVoyage'])){
 			$context->idVoyage = $request['idVoyage'];
 			// echo $context->idVoyage;
-			mainController::voyages($request, $context);
+			mainController::searchVoyages($request, $context);
 			// echo "nb voyages: ", sizeof($context->voyages), "<br>";
 			// echo "id voyage: ", $context->voyages[0]->trajet->id, "<br>";
 			foreach($context->voyages as $voyage){

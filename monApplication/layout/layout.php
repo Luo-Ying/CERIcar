@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" lang="fr">
 
     
-    <?php include($nameApp."/view/headerSuccess.php"); ?>
+  <?php include($nameApp."/view/headerSuccess.php"); ?>
 
   <!-- <body> -->
    
@@ -14,7 +14,7 @@
         	<?php echo " $context->error !!!!!" ?>
       	</div>
       <?php endif; ?>
-      <div id="page_maincontent">	
+      <div id="mainContent">	
       	<?php include($template_view); ?>
       </div>
     </div>
