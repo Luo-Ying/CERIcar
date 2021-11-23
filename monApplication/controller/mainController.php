@@ -73,7 +73,7 @@ class mainController
 		}
 	}
 
-	public static function voyagesTest($request, $context){
+	public static function voyages($request, $context){
 		mainController::trajetTest($request, $context);
 		$voyages = voyageTable::getVoyagesByTrajet($context->trajet);
 		// if($voyages){
@@ -89,7 +89,7 @@ class mainController
 		if(isset($request['idVoyage'])){
 			$context->idVoyage = $request['idVoyage'];
 			// echo $context->idVoyage;
-			mainController::voyagesTest($request, $context);
+			mainController::voyages($request, $context);
 			// echo "nb voyages: ", sizeof($context->voyages), "<br>";
 			// echo "id voyage: ", $context->voyages[0]->trajet->id, "<br>";
 			foreach($context->voyages as $voyage){
@@ -108,6 +108,7 @@ class mainController
 			return context::SUCCESS;
 		}
 	}
+
 
 
 }
