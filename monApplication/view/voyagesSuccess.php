@@ -29,9 +29,9 @@
                 <div class="voyageCard-main">
                     <div class="voyageCard-trajet">
                         <div class="voyageCardTrajetHeureDepart&Arrivee">
-                            <p><?php echo $voyage->heureDepart; ?></p>
+                            <p><?php echo $voyage->heureDepart."h"; ?></p>
                             <br>
-                            <p><?php echo $voyage->heureDepart; ?></p>
+                            <p><?php echo $voyage->heureDepart."h"; ?></p>
                         </div>
                         <div class="barHeuresTrajet"></div>
                         <div class="voyageCardTrajetVilleDepart&Arrivee">

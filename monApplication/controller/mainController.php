@@ -74,6 +74,7 @@ class mainController
 	}
 
 	public static function voyages($request, $context){
+		// echo "ok<br>";
 		mainController::trajetTest($request, $context);
 		$voyages = voyageTable::getVoyagesByTrajet($context->trajet);
 		// if($voyages){
@@ -82,6 +83,7 @@ class mainController
 		$context->voyages = $voyages;
 		// echo $context->voyages[1]->id;
 		return context::SUCCESS;
+		
 	}
 
 
@@ -94,18 +96,20 @@ class mainController
 			// echo "id voyage: ", $context->voyages[0]->trajet->id, "<br>";
 			foreach($context->voyages as $voyage){
 				// echo "<br>ok<br>";
+				// echo $voyage->id;
+				// if()
 				// echo $voyage->id, "<br>";
 				// echo $context->idVoyage, "<br>";
 				if($voyage->id == $context->idVoyage){
 					// echo "<br>ok<br>";
 					$context->voyage = $voyage;
-
+					$reservations = reservationTable::getReservationByVoyage($context->voyage);
+				
 				}
 			}
-			// echo $context->voyage->id;
-			$reservations = reservationTable::getReservationByVoyage($context->voyage);
 			$context->reservations = $reservations;
 			return context::SUCCESS;
+			// echo $context->voyage->id;
 		}
 	}
 

@@ -8,5 +8,6 @@
         echo "id voyage : ", $reservation->voyage->id, "<br>";
         // echo "<br>ok<br>";
         echo "id voyageur: ", $reservation->voyageur->id, "<br>";
+        echo "nom voyageur:", $reservation->voyageur->nom, "<br>";
     }
 ?>

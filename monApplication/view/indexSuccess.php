@@ -3,9 +3,9 @@
 
 
 <!-- <div class="bgimg w3-display-container w3-animate-opacity w3-text-white"> -->
-    <div>
+    <!-- <div>
         <a href=monApplication.php?action=logout>Deconnectez vous !</a>
-    </div>
+    </div> -->
     <div class="w3-display-topleft w3-padding-large w3-xlarge">
         <!-- Logo -->
     </div>
