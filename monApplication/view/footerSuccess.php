@@ -9,7 +9,7 @@
 
 
     <div class="w3-display-bottomleft w3-padding-large">
-        Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a>
+        Author by <a href="" target="_blank">Yingqi LUO</a>
     </div>
 
 

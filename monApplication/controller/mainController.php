@@ -15,6 +15,10 @@ class mainController
 		return context::SUCCESS;
 	}
 
+	public static function banner($request,$context) {
+		return context::SUCCESS;
+	}
+
 
 	// test module for etape 2 
 	

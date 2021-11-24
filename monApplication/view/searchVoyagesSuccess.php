@@ -1,19 +1,3 @@
-<?php
-    // $i = 0;
-    // foreach ($context->voyages as $voyage) {
-    //     $i++;
-    //     echo "<br><br><br><br><br><br>";
-    //     echo "voyage ", $i, " :<br>";
-    //     echo "id: ", $voyage->id, "<br>";
-    //     echo "id contucteur: ", $voyage->conducteur->id, "<br>";
-    //     // echo "<br>ok<br>";
-    //     echo "id trajet: ", $voyage->trajet->id, "<br>";
-    //     echo "tarif: ", $voyage->tarif, "<br>";
-    //     echo "nbplace: ", $voyage->nbPlace, "<br>";
-    //     echo "heuredepart: ", $voyage->heureDepart, "<br>";
-    //     echo "contraintes: ", $voyage->contraintes, "<br>";
-    // }
-?>
 
 <div class="w3-card">
     <div style="padding-left: 450px;">
@@ -59,6 +43,15 @@
     <?php endforeach; ?>
 </div>
 
+<script>
+    $('#btn-home').click(function(){
+        console.log('ok');
+        $.get("monApplicationAjax.php?action=index",function(res){
+            console.log(res);
+            $( "#mainContent" ).html(res);
+        });
+    })
+</script>
 
 
 

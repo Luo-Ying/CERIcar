@@ -5,19 +5,24 @@
   <?php include($nameApp."/view/headerSuccess.php"); ?>
 
   <!-- <body> -->
-   
+   <div id="banner-notification">
+     <?php include($nameApp."/view/bannerSuccess.php"); ?>
+   </div>
 
-    <div id="page">
-      <?php if($context->error): ?> 
-      	<div id="flash_error" class="error">
-          <!-- <img url='../../images/imgIndex.jpg'> -->
-        	<?php echo " $context->error !!!!!" ?>
-      	</div>
-      <?php endif; ?>
-      <div id="mainContent">	
-      	<?php include($template_view); ?>
+
+  <div id="page-mainContent">
+    <?php if($context->error): ?> 
+      <div id="flash_error" class="error">
+        <!-- <img url='../../images/imgIndex.jpg'> -->
+        <?php echo " $context->error !!!!!" ?>
       </div>
+    <?php endif; ?>
+    <div id="mainContent">	
+      <?php 
+      include($template_view); 
+      ?>
     </div>
+  </div>
       
 
   <!-- </body> -->
@@ -25,3 +30,12 @@
   <?php include($nameApp."/view/footerSuccess.php"); ?>
 
 </html>
+
+<script>
+  // $(function(){
+  //   $('#banner-notification').css('diaplay', 'block');
+  //   setTimeout(function(){
+  //     $("#banner-notification").css('display', 'none');
+  //   }, 2500);
+  // })
+</script>
