@@ -32,43 +32,53 @@
     </div> -->
     
     <!-- success -->
-    <?php echo "ok"; ?>
-    <?php echo $context->trajet->depart; ?>
-    <?php if(true): ?>
-        <?php if(sizeof($context->voyage) > 0): ?>
-            <?php echo "ok"; ?>
-            <div class="row">
-                <div class="col-xs-12 col-sm-6 col-sm-offset-3">
-                    <div class="new-message-box">
-                        <div class="new-message-box-success">
-                            <div class="info-tab tip-icon-success" title="success"><i></i></div>
-                            <div class="tip-box-success">
-                                <p> Recherche terminée / Poste d'annonce reussit... </p>
-                            </div>
+
+    <?php echo $context->depart." ".$context->arrivee; ?>
+
+    <?php if($context->hasVoyages): ?>
+        <div class="row">
+            <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+                <div class="new-message-box">
+                    <div class="new-message-box-success">
+                        <div class="info-tab tip-icon-success" title="success"><i></i></div>
+                        <div class="tip-box-success">
+                            <p> Recherche terminée / Poste d'annonce reussit... </p>
                         </div>
                     </div>
                 </div>
             </div>
-        <?php else: ?>
-            <?php echo $request['depart']." ".$resquest['arrivee']; ?>
-            <?php sizeof($context->voyage); ?>
-            <!-- warning notification -->
-            <div class="row">
-                <div class="col-xs-12 col-sm-6 col-sm-offset-3">
-                    <div class="new-message-box">
-                        <div class="new-message-box-alert">
-                            <div class="info-tab tip-icon-alert" title="warning"><i></i></div>
-                            <div class="tip-box-alert">
-                                <p> 
-                                    Il n'y a pas de trajet !
-                                </p>
-                            </div>
+        </div>
+    <?php else: ?>
+        <div class="row">
+            <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+                <div class="new-message-box">
+                    <div class="new-message-box-alert">
+                        <div class="info-tab tip-icon-alert" title="warning"><i></i></div>
+                        <div class="tip-box-alert">
+                            <p> 
+                                Il n'y a pas de trajet !
+                            </p>
                         </div>
                     </div>
                 </div>
             </div>
-        <?php endif; ?>
+        </div>
     <?php endif; ?>
+
+    <?php echo $context->depart." ".$context->arrivee; ?>
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+            <div class="new-message-box">
+                <div class="new-message-box-<?php echo $context->criticality; ?>">
+                    <div class="info-tab tip-icon-<?php echo $context->criticality; ?>" title="<?php echo $context->title; ?>"><i></i></div>
+                    <div class="tip-box-<?php echo $context->criticality; ?>">
+                        <p> <?php echo $context->message; ?> </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <!-- test -->
     <!-- <div class="row">

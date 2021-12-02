@@ -15,24 +15,54 @@ class mainController
 		return context::SUCCESS;
 	}
 
-	public static function banner($request,$context) {
+	public static function banner(array $request, $context)
+	{
+		$trajet = trajetTable::getTrajet($request['depart'], $request['arrivee']);
+
+		$context->hasVoyages = (bool) voyageTable::getVoyagesByTrajet($trajet);
+		$context->depart = $request['depart'];
+		$context->arrivee = $request['arrivee'];
+
+		return context::SUCCESS;
+	}
+
+	public static function banner2(array $request, $context)
+	{
+		$trajet = trajetTable::getTrajet($request['depart'], $request['arrivee']);
+
+		$context->title = 'success';
+		if (voyageTable::getVoyagesByTrajet($trajet)) {
+			$context->message = 'Recherche terminée / Poste d\'annonce reussit...';
+			$context->criticality = 'success';
+		} else {
+			$context->message = 'Il n\'y a pas de trajet !';
+			$context->criticality = 'warning';
+		}
+		
+		$context->depart = $request['depart'];
+		$context->arrivee = $request['arrivee'];
+		
+
 		return context::SUCCESS;
 	}
 
 
 	// test module for etape 2 
 	
-	public static function getUserByLoginAndPassTest($request,$context){
-		// echo "ok";
-		if(isset($request['login']) and isset($request['pass'])){
+	public static function getUserByLoginAndPassTest(array $request, $context)
+	{
+		if(isset($request['login']) and isset($request['pass'])) {
 			$context->login = $request['login'];
 			$context->pass = $request['pass'];
-			// echo $context->login, $context->pass;
+
 			$user = utilisateurTable::getUserByLoginAndPass($context->login, $context->pass);
-			// echo "ok";
+
 			$context->user = $user;
+
 			return context::SUCCESS;
-		}  	
+		}
+
+		return context::ERROR;
 	}
 
 	public static function getUserByIdTest($request, $context){
@@ -65,8 +95,8 @@ class mainController
 		// }
 		$context->voyages = $voyages;
 		// echo $context->voyages[1]->id;
+
 		return context::SUCCESS;
-		
 	}
 
 
@@ -95,7 +125,4 @@ class mainController
 			// echo $context->voyage->id;
 		}
 	}
-
-
-
 }
