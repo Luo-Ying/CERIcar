@@ -18,30 +18,19 @@ class mainController
 	public static function banner(array $request, $context)
 	{
 		$trajet = trajetTable::getTrajet($request['depart'], $request['arrivee']);
-
 		$context->hasVoyages = (bool) voyageTable::getVoyagesByTrajet($trajet);
-		$context->depart = $request['depart'];
-		$context->arrivee = $request['arrivee'];
 
-		return context::SUCCESS;
-	}
-
-	public static function banner2(array $request, $context)
-	{
-		$trajet = trajetTable::getTrajet($request['depart'], $request['arrivee']);
-
-		$context->title = 'success';
-		if (voyageTable::getVoyagesByTrajet($trajet)) {
-			$context->message = 'Recherche terminée / Poste d\'annonce reussit...';
+		if ($context->hasVoyages) {
+			$context->message = 'Recherche terminée ';
 			$context->criticality = 'success';
-		} else {
+			$context->title = 'success';
+		} 
+		else {
 			$context->message = 'Il n\'y a pas de trajet !';
-			$context->criticality = 'warning';
+			$context->criticality = 'alert';
+			$context->title = 'warning';
 		}
-		
-		$context->depart = $request['depart'];
-		$context->arrivee = $request['arrivee'];
-		
+		// TODO: [Poste d\'annonce reussit...] / [xxxx(champ) est obligatoire !]
 
 		return context::SUCCESS;
 	}
@@ -87,14 +76,9 @@ class mainController
 	}
 
 	public static function searchVoyages($request, $context){
-		// echo "ok<br>";
 		mainController::trajetTest($request, $context);
 		$voyages = voyageTable::getVoyagesByTrajet($context->trajet);
-		// if($voyages){
-		// 	echo "ok";
-		// }
 		$context->voyages = $voyages;
-		// echo $context->voyages[1]->id;
 
 		return context::SUCCESS;
 	}

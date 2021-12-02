@@ -17,7 +17,7 @@
             console.log(dataVoyage);
             $( "#mainContent" ).html(dataVoyage);
         });
-        $.get("monApplicationAjax.php?action=banner", function(banner){
+        $.get("monApplicationAjax.php?action=banner&depart="+$('#case-depart').val()+"&arrivee="+$('#case-destination').val(), function(banner){
             console.log(banner);
             $( "#banner-notification" ).html( banner );
             // $("#banner-notification").show();
