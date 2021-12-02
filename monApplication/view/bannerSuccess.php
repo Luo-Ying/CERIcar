@@ -32,7 +32,46 @@
     </div> -->
     
     <!-- success -->
-    <div class="row">
+    <?php echo "ok"; ?>
+    <?php echo $context->trajet->depart; ?>
+    <?php if(true): ?>
+        <?php if(sizeof($context->voyage) > 0): ?>
+            <?php echo "ok"; ?>
+            <div class="row">
+                <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+                    <div class="new-message-box">
+                        <div class="new-message-box-success">
+                            <div class="info-tab tip-icon-success" title="success"><i></i></div>
+                            <div class="tip-box-success">
+                                <p> Recherche terminée / Poste d'annonce reussit... </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <?php else: ?>
+            <?php echo $request['depart']." ".$resquest['arrivee']; ?>
+            <?php sizeof($context->voyage); ?>
+            <!-- warning notification -->
+            <div class="row">
+                <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+                    <div class="new-message-box">
+                        <div class="new-message-box-alert">
+                            <div class="info-tab tip-icon-alert" title="warning"><i></i></div>
+                            <div class="tip-box-alert">
+                                <p> 
+                                    Il n'y a pas de trajet !
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <?php endif; ?>
+    <?php endif; ?>
+
+    <!-- test -->
+    <!-- <div class="row">
         <div class="col-xs-12 col-sm-6 col-sm-offset-3">
             <div class="new-message-box">
                 <div class="new-message-box-success">
@@ -43,7 +82,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <!-- warning -->
     <!-- <div class="row">

@@ -20,6 +20,8 @@
     <div id="mainContent">	
       <?php 
       include($template_view); 
+      // echo "ok";
+      // echo $context->depart;
       ?>
     </div>
   </div>

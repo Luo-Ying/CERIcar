@@ -13,6 +13,10 @@
 <script>
     // <-- methode GET -->
     $('#btn-Rechercher-voyages').click(function () {
+        $.get("monApplicationAjax.php?action=searchVoyages&depart="+$('#case-depart').val()+"&arrivee="+$('#case-destination').val(), function(dataVoyage){
+            console.log(dataVoyage);
+            $( "#mainContent" ).html(dataVoyage);
+        });
         $.get("monApplicationAjax.php?action=banner", function(banner){
             console.log(banner);
             $( "#banner-notification" ).html( banner );
@@ -23,10 +27,6 @@
             setTimeout(function(){
                 $("#banner-notification").css('display', 'none');
             }, 2500);
-        });
-        $.get("monApplicationAjax.php?action=searchVoyages&depart="+$('#case-depart').val()+"&arrivee="+$('#case-destination').val(), function(dataVoyage){
-            console.log(dataVoyage);
-            $( "#mainContent" ).html(dataVoyage);
         });
     })
 
