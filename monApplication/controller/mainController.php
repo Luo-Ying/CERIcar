@@ -86,7 +86,7 @@ class mainController
 		mainController::trajetTest($request, $context);
 		$voyages = voyageTable::getVoyagesByTrajet($context->trajet);
 		$context->voyages = $voyages;
-
+		// $context->distance = $context->trajet->distance;
 		return context::SUCCESS;
 	}
 

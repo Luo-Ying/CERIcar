@@ -18,7 +18,7 @@
                         <div class="voyageCardTrajetHeureDepart&Arrivee">
                             <p><?php echo $voyage->heureDepart."h"; ?></p>
                             <br>
-                            <p><?php echo $voyage->heureDepart."h"; ?></p>
+                            <p><?php echo round($voyage->heureDepart+($voyage->trajet->distance/60))."h".$voyage->trajet->distance%60; ?></p>
                         </div>
                         <div class="barHeuresTrajet"></div>
                         <div class="voyageCardTrajetVilleDepart&Arrivee">
