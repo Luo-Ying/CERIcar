@@ -20,15 +20,22 @@ class mainController
 		$trajet = trajetTable::getTrajet($request['depart'], $request['arrivee']);
 		$context->hasVoyages = (bool) voyageTable::getVoyagesByTrajet($trajet);
 
-		if ($context->hasVoyages) {
-			$context->message = 'Recherche terminée ';
-			$context->criticality = 'success';
-			$context->title = 'success';
-		} 
-		else {
-			$context->message = 'Il n\'y a pas de trajet !';
-			$context->criticality = 'alert';
-			$context->title = 'warning';
+		if((isset($request['depart']) && isset($request['arrivee'])) && (($request['depart'] != null) && ($request['arrivee'] != null))){
+			if($context->hasVoyages) {
+				$context->message = 'Recherche terminée ';
+				$context->criticality = 'success';
+				$context->title = 'success';
+			} 
+			else {
+				$context->message = 'Il n\'y a pas de trajet !';
+				$context->criticality = 'alert';
+				$context->title = 'warning';
+			}
+		}
+		else{
+			$context->message = 'Le champ de départ ou Destination est onligatoire !';
+			$context->criticality = 'warning';
+			$context->title = 'error';
 		}
 		// TODO: [Poste d\'annonce reussit...] / [xxxx(champ) est obligatoire !]
 

@@ -2,7 +2,10 @@
 <div class="w3-card">
     <div style="padding-left: 450px;">
     <br>
-        <p> <?php echo sizeof($context->voyages) ?> trajets disponibles</p>
+        <p> 
+            <?php echo sizeof($context->voyages) ?>
+            <?php if(sizeof($context->voyages) > 1){echo "voyages";}else{echo "voyage";}?> disponibles
+        </p>
     </div>
     <!-- <p>123456</p> -->
     <?php $i = 0; ?>

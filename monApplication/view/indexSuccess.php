@@ -13,10 +13,12 @@
 <script>
     // <-- methode GET -->
     $('#btn-Rechercher-voyages').click(function () {
-        $.get("monApplicationAjax.php?action=searchVoyages&depart="+$('#case-depart').val()+"&arrivee="+$('#case-destination').val(), function(dataVoyage){
-            console.log(dataVoyage);
-            $( "#mainContent" ).html(dataVoyage);
-        });
+        if(($('#case-depart').val() != "") && ($('#case-destination').val() != "")){
+            $.get("monApplicationAjax.php?action=searchVoyages&depart="+$('#case-depart').val()+"&arrivee="+$('#case-destination').val(), function(dataVoyage){
+                console.log(dataVoyage);
+                $( "#mainContent" ).html(dataVoyage);
+            });
+        }
         $.get("monApplicationAjax.php?action=banner&depart="+$('#case-depart').val()+"&arrivee="+$('#case-destination').val(), function(banner){
             console.log(banner);
             $( "#banner-notification" ).html( banner );

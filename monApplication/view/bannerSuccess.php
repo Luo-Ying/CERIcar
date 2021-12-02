@@ -28,21 +28,6 @@
             </div>
         </div>
     </div> -->
-    
-
-    <!-- warning -->
-    <!-- <div class="row">
-        <div class="col-xs-12 col-sm-6 col-sm-offset-3">
-            <div class="new-message-box">
-                <div class="new-message-box-warning">
-                    <div class="info-tab tip-icon-warning" title="error"><i></i></div>
-                    <div class="tip-box-warning">
-                        <p> xxxx est obligatoire ! </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> -->
 
     <!-- notification -->
     <!-- <div class="row">

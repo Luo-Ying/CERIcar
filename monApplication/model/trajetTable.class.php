@@ -24,7 +24,7 @@ class trajetTable{
         // echo "<br>ok<br>";
         
         if($trajet == false){
-            echo 'Erreur sql';
+            // echo 'Erreur sql';
         }
         else{
             return $trajet;

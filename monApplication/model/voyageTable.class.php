@@ -16,7 +16,7 @@ class voyageTable{
         // echo "<br>ok<br>";
 
         if($voyages == false){
-            echo 'Erreur sql';
+            // echo 'Erreur sql';
         }
         return $voyages;
     }
