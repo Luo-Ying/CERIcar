@@ -1,0 +1,6 @@
+<?php
+
+echo json_encode([
+    'success' => true,
+    // 'html' => <?php include "indexSuccess.php" //?//> @todo à voir
+]);

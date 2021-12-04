@@ -15,15 +15,18 @@ class mainController
 		return context::SUCCESS;
 	}
 
-	public static function login($request, $context){
-		return context::SUCCESS;
-	}
-
 	public static function banner(array $request, $context)
 	{
 		$trajet = trajetTable::getTrajet($request['depart'], $request['arrivee']);
 		$user = utilisateurTable::getUserByLoginAndPass($request['identifiant'], $request['pass']);
 		$context->hasVoyages = (bool) voyageTable::getVoyagesByTrajet($trajet);
+
+		// @todo ne devrait faire que ça, supprimer les autres cas ! 
+		if (isset($request['message'])) {
+			$context->message = $request['message'];
+			$context->criticality = $request['criticality'] ?? 'success';
+			$context->title = $context->criticality;
+		}
 
 		if((isset($request['depart']) && isset($request['arrivee'])) && (($request['depart'] != null) && ($request['arrivee'] != null))){
 			if($context->hasVoyages) {
@@ -35,18 +38,6 @@ class mainController
 				$context->message = 'Il n\'y a pas de trajet !';
 				$context->criticality = 'alert';
 				$context->title = 'warning';
-			}
-		}
-		else if((isset($request['identifiant']) && isset($request['pass'])) && (($request['identifiant'] != null) && ($request['pass'] != null))){
-			if($user){
-				$context->message = 'Bienvenu !';
-				$context->criticality = 'success';
-				$context->title = 'success';
-			}
-			else{
-				$context->message = 'Votre compte ou mot de pass n\'est pas bon !';
-				$context->criticality = 'danger';
-				$context->title = 'error';
 			}
 		}
 		else{
@@ -68,31 +59,24 @@ class mainController
 
 
 	// test module for etape 2 
-	
-	public static function checkLogin(array $request, $context)
+
+	public static function login(array $request, $context)
 	{
-
-		if(isset($request['login']) and isset($request['pass'])) {
-			$context->login = $request['login'];
-			$context->pass = $request['pass'];
-
-			$user = utilisateurTable::getUserByLoginAndPass($context->login, $context->pass);
-			$context->user = $user;
-
-			if($user){
-				$context->setSessionAttribute('userId', $user->identifiant);
-				$context->setSessionAttribute('userPass', $user->pass);
-				$context->setSessionAttribute('is_login', true);
-				echo "is_login:true";
-				// $data = json_decode($request['']);
-				return context::SUCCESS;
-			}
-			else{
-				return context::ERROR;
-			}
+		if (!isset($request['login']) or !isset($request['pass'])) {
+			return context::ERROR;
 		}
-		return context::ERROR;
+
+		$user = utilisateurTable::getUserByLoginAndPass($request['login'], $request['pass']);
+
+		if (!$user) {
+			return context::ERROR;
+		}
+
+		$context->setSessionAttribute('userId', $user->identifiant);
+
+		return context::SUCCESS;
 	}
+
 
 	public static function getUserByIdTest($request, $context){
 		if(isset($request['id'])){
@@ -105,7 +89,6 @@ class mainController
 
 
 	public static function trajetTest($request, $context){
-		// echo "ok";
 		if(isset($request['depart']) and isset($request['arrivee'])){
 			$context->depart = $request['depart'];
 			$context->arrivee = $request['arrivee'];
@@ -125,6 +108,10 @@ class mainController
 
 
 	public static function reservationsTest($request, $context){
+		if (!$context->getSessionAttribute('userId')) {
+			return context::ERROR;
+		}
+
 		if(isset($request['idVoyage'])){
 			$context->idVoyage = $request['idVoyage'];
 			// echo $context->idVoyage;
