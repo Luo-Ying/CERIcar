@@ -13,10 +13,18 @@
   <link rel="stylesheet" href="./css/local-css/local.css">
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script text="text/javascript" src="./js/monFonctionAjax.js"></script>
+  <script text="text/javascript" src="./js/local.js"></script>
  
 
 </head>
+
+
+    <?php
+
+      // $_SESSION['is_login']
+
+    ?>
+
 
 <body>
   <div class="bgimg w3-display-container w3-animate-opacity w3-text-white">
@@ -28,7 +36,12 @@
           <a href="#" class="w3-bar-item w3-button w3-hover-black w3-border-white w3-bottombar w3-hover-border-gray">Proposez un voyage</a>
       </div>
       <div class="case-Connecte">
+        <?php if(!isset($_SESSION['is_login'])): ?>
+          <button type="submit" id="btn-connecte" class="w3-button w3-hover-black ">Connectez vous</button>
+        <?php endif; ?>
+        <?php if(isset($_SESSION['is_login'])): ?>
           <a href=monApplication.php?action=logout>Deconnectez vous !</a>
+        <?php endif; ?>
       </div>
     </div>
 
@@ -36,3 +49,16 @@
     <?php if($context->getSessionAttribute('user_id')): ?>
       <?php echo $context->getSessionAttribute('user_id')." est connecte"; ?>
     <?php endif; ?>
+
+
+<script>
+
+  $('#btn-connecte').click(function(){
+      // console.log('ok');
+      $.get("monApplicationAjax.php?action=login",function(res){
+          console.log(res);
+          $( "#mainContent" ).html(res);
+      });
+  });
+
+</script>

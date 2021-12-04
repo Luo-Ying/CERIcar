@@ -19,7 +19,7 @@ require_once $nameApp.'/controller/mainController.php';	//include
 foreach(glob($nameApp.'/model/*.class.php') as $model)
 	include_once $model ;   
 
-session_start();
+// session_start();
 
 $context = context::getInstance();	//recupere le context
 $context->init($nameApp);

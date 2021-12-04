@@ -9,13 +9,15 @@ class utilisateurTable {
 		$em = dbconnection::getInstance()->getEntityManager() ;
 
 		$userRepository = $em->getRepository('utilisateur') ;
-		// echo "ok";
+		//echo "ok";
 		// $user = $userRepository->findOneBy(array('identifiant' => $login, 'pass' => sha1($pass)));	
-		$user = $userRepository->findOneBy(array('identifiant' => $login, 'pass' => $pass));	
+		$user = $userRepository->findOneBy(array('identifiant' => $login, 'pass' => $pass));
 
-		if ($user == false){
-			echo 'Erreur sql';
-		}
+		//echo $user->id;
+		// if ($user == false){
+		// 	// echo 'Erreur sql';
+		// 	echo "is_login: false";
+		// }
 		return $user; 
 	}
 

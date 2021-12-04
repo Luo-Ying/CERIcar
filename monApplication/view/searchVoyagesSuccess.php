@@ -48,7 +48,7 @@
 
 <script>
     $('#btn-home').click(function(){
-        console.log('ok');
+        // console.log('ok');
         $.get("monApplicationAjax.php?action=index",function(res){
             console.log(res);
             $( "#mainContent" ).html(res);

@@ -22,7 +22,6 @@
         $.get("monApplicationAjax.php?action=banner&depart="+$('#case-depart').val()+"&arrivee="+$('#case-destination').val(), function(banner){
             console.log(banner);
             $( "#banner-notification" ).html( banner );
-            // $("#banner-notification").show();
             setTimeout(function(){
                 $("#banner-notification").show();
             }, 500);
@@ -33,7 +32,7 @@
     })
 
     $('#btn-home').click(function(){
-        console.log('ok');
+        // console.log('ok');
         $.get("monApplicationAjax.php?action=index",function(res){
             console.log(res);
             $( "#mainContent" ).html(res);
