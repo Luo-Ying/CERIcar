@@ -10,21 +10,31 @@ class mainController
 		return context::SUCCESS;
 	}
 
+	public static function header($request,$context){
+		return context::SUCCESS;
+	}
+
 	public static function index($request,$context){
 		// echo "ok";
 		return context::SUCCESS;
 	}
 
-	public static function login($request, $context){
+	public static function loginIndex($request, $context){
 		return context::SUCCESS;
 	}
 
 	public static function banner(array $request, $context)
 	{
 		$trajet = trajetTable::getTrajet($request['depart'], $request['arrivee']);
-		$user = utilisateurTable::getUserByLoginAndPass($request['identifiant'], $request['pass']);
+		// $user = utilisateurTable::getUserByLoginAndPass($request['identifiant'], $request['pass']);
 		$context->hasVoyages = (bool) voyageTable::getVoyagesByTrajet($trajet);
-
+		
+		if(isset($request['message'])){
+			$context->message = $request['message'];
+			$context->criticality = $request['criticality'] ?? 'success';
+			$context->title = $request['title'];
+		}
+		// verifier le cherche de la voyage
 		if((isset($request['depart']) && isset($request['arrivee'])) && (($request['depart'] != null) && ($request['arrivee'] != null))){
 			if($context->hasVoyages) {
 				$context->message = 'Recherche terminée ';
@@ -37,30 +47,13 @@ class mainController
 				$context->title = 'warning';
 			}
 		}
-		else if((isset($request['identifiant']) && isset($request['pass'])) && (($request['identifiant'] != null) && ($request['pass'] != null))){
-			if($user){
-				$context->message = 'Bienvenu !';
-				$context->criticality = 'success';
-				$context->title = 'success';
-			}
-			else{
-				$context->message = 'Votre compte ou mot de pass n\'est pas bon !';
-				$context->criticality = 'danger';
-				$context->title = 'error';
-			}
+		// else{
+		else if((isset($request['depart']) && isset($request['arrivee'])) && (($request['depart'] == null) && ($request['arrivee'] == null))){
+			$context->message = 'Le champ de départ ou Destination est onligatoire !';
+			$context->criticality = 'warning';
+			$context->title = 'error';
 		}
-		else{
-			if((isset($request['depart']) && isset($request['arrivee'])) && (($request['depart'] == null) && ($request['arrivee'] == null))){
-				$context->message = 'Le champ de départ ou Destination est onligatoire !';
-				$context->criticality = 'warning';
-				$context->title = 'error';
-			}
-			else if(($request['identifiant'] == null) && ($request['pass'] == null)){
-				$context->message = 'Le champ de Username ou Password est onligatoire !';
-				$context->criticality = 'warning';
-				$context->title = 'error';
-			}
-		}
+		// }
 		// TODO: [Poste d\'annonce reussit...] / [xxxx(champ) est obligatoire !]
 
 		return context::SUCCESS;
@@ -73,26 +66,38 @@ class mainController
 	{
 
 		if(isset($request['login']) and isset($request['pass'])) {
-			$context->login = $request['login'];
-			$context->pass = $request['pass'];
+			$user = utilisateurTable::getUserByLoginAndPass($request['login'], $request['pass']);
 
-			$user = utilisateurTable::getUserByLoginAndPass($context->login, $context->pass);
-			$context->user = $user;
-
-			if($user){
-				$context->setSessionAttribute('userId', $user->identifiant);
-				$context->setSessionAttribute('userPass', $user->pass);
-				$context->setSessionAttribute('is_login', true);
-				echo "is_login:true";
-				// $data = json_decode($request['']);
+			if(!$user){
+				echo "is_login:false";
 				return context::SUCCESS;
 			}
 			else{
+				echo "is_login:true";
+				$context->setSessionAttribute('userId', $user->identifiant);
+				// $_SESSION['userId'] = $user->identifiant;
 				return context::ERROR;
 			}
 		}
 		return context::ERROR;
 	}
+	
+	// public static function checkLogin(array $request, $context){
+	// 	if(!isset($request['login']) or !isset($request['pass'])){
+	// 		return context::ERROR;
+	// 	}
+
+	// 	$user = utilisateurTable::getUserByLoginAndPass($request['login'], $request['pass']);
+
+	// 	if(!$user){
+	// 		return context::ERROR;
+	// 	}
+
+	// 	$context->setSessionAttribute('userId', $user->identifiant);
+
+	// 	return context::SUCCESS;
+	// }
+
 
 	public static function getUserByIdTest($request, $context){
 		if(isset($request['id'])){

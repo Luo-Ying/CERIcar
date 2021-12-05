@@ -60,3 +60,42 @@ $(document).ready(function() {
     // });
     
   });
+
+
+// /**
+//  * 
+//  * @param {string} message 
+//  * @param {"success"|"warning"|"danger"} [criticality]
+//  * @param {string} title
+//  */
+// function displayBanner(message, criticality, title){
+//     if(criticality === undefined){
+//         criticality = "success";
+//     }
+//     if(title === undefined){
+//       criticality = "success";
+//     }
+
+//     $.ajax({
+//     url: "monApplicationAjax.php?action=banner",
+//     type: "post",
+//     data: {"identifiant":$('#case-identifiant').val(), "pass":$('#case-pass').val()},
+//     data:{
+//         message: message,
+//         criticality: criticality,
+//         title: title,
+//     },
+//     success:function(reponse){
+//           $("#banner-notification").html(reponse);
+
+//           setTimeout(function(){
+//             $("#banner-notification").show();
+//           }, 500);
+
+//           setTimeout(function(){
+//             $("#banner-notification").css('display', 'none');
+//           }, 2500);
+//         },
+//         error: console.error
+//     });
+// }
