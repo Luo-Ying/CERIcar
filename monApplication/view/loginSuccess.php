@@ -1,3 +1,9 @@
+<?php
+
+
+
+?>
+
   <div class="demo">
     <div class="login">
       <div class="login__check"><i class="fas fa-user fa-10x"></i></div>
@@ -32,71 +38,77 @@
 
 <script>
 
-    function displayPage(action) {
-        $.get("monApplicationAjax.php?action=" + action, function(html){
-            $("#mainContent").html(html);
-        })
-    }
-
-    /**
-     * @param {string} message
-     * @param {"success"|"warning"|"danger"} [criticality]
-     */
-    function displayBanner(message, criticality) {
-        if (criticality === undefined) {
-            criticality = "success"
+    $("#btn-connecter").click(function(){
+        if(($('#case-identifiant').val() != "") && ($('#case-pass').val() != "")){
+            $.ajax({
+                url: "monApplicationAjax.php?action=checkLogin",
+                type: "post",
+                data: {"login":$('#case-identifiant').val(), "pass":$('#case-pass').val()},
+                success: function(data) {
+                    
+                    if(data.indexOf("is_login:true") >= 0){
+                        $.get("monApplicationAjax.php?action=index",function(data){
+                            $( "#mainContent" ).html(data);
+                        })
+                        $.ajax({
+                            url: "monApplicationAjax.php?action=banner",
+                            type: "post",
+                            data: {"identifiant":$('#case-identifiant').val(), "pass":$('#case-pass').val()},
+                            success: function(reponse) {
+                                console.log("réussit");
+                                $( "#banner-notification" ).html(reponse);
+                                setTimeout(function(){
+                                    $("#banner-notification").show();
+                                }, 500);
+                                setTimeout(function(){
+                                    $("#banner-notification").css('display', 'none');
+                                }, 2500);
+                            },
+                            error: function(xhr) {
+                                console.log("échec");
+                            }
+                        });
+                    }
+                    else{
+                        $.get("monApplicationAjax.php?action=banner&identifiant="+$('#case-identifiant').val()+"&pass="+$('#case-passs').val(), function(banner){
+                            console.log(banner);
+                            $( "#banner-notification" ).html( banner );
+                            setTimeout(function(){
+                                $("#banner-notification").show();
+                            }, 500);
+                            setTimeout(function(){
+                                $("#banner-notification").css('display', 'none');
+                            }, 2500);
+                        });
+                    }
+                },
+                error: function(xhr) {
+                    alert('error');
+                    alert(xhr);
+                    // $.get("monApplicationAjax.php?action=login",function(xhr){
+                    //     $( "#mainContent" ).html(xhr);
+                    // })
+                }
+            });
         }
-
         $.ajax({
             url: "monApplicationAjax.php?action=banner",
             type: "post",
-            data: {
-                message: message,
-                criticality: criticality,
-            },
+            data: {"identifiant":$('#case-identifiant').val(), "pass":$('#case-pass').val()},
             success: function(reponse) {
-                $("#banner-notification").html(reponse);
-
+                console.log("réussit");
+                $( "#banner-notification" ).html(reponse);
                 setTimeout(function(){
                     $("#banner-notification").show();
                 }, 500);
-
                 setTimeout(function(){
                     $("#banner-notification").css('display', 'none');
                 }, 2500);
             },
-            error: console.error
+            error: function(xhr) {
+                console.log("échec");
+            }
         });
-    }
-
-    $("#btn-connecter").on('click', function(event) {
-        event.prenventDefault();
-
-        if($('#case-identifiant').val() && $('#case-pass').val()){
-            $.ajax({
-                url: "monApplicationAjax.php?action=connect",
-                type: "post",
-                data: {
-                    login: $('#case-identifiant').val(),
-                    pass: $('#case-pass').val()
-                },
-                success: function(data) {
-
-                    if (data.success) {
-                        displayBanner("Connexion effectuée avec succès");
-
-                        // $('#main-conatiner').html(data.html); @todo à voir
-                        // displayPage(data.redirectAction);
-
-                        displayPage("indexSuccess");
-                        
-                    } else {
-                        displayBanner("Erreur login/mot de passe");
-                    }
-                },
-                error: console.error
-            });
-        }
     });
 
 </script>
