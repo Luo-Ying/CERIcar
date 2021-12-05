@@ -89,7 +89,7 @@
                 success: function(data) {
                     if(data.indexOf("is_login:true") >= 0){
                         // console.log("ok");
-                        $.get("monApplicationAjax.php?action=header&login="+$('#case-identifiant').val(),function(data){
+                        $.get("monApplicationAjax.php?action=header",function(data){
                             console.log();
                             $( "#header" ).html(data);
                         })

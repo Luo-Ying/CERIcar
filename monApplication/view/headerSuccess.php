@@ -12,7 +12,6 @@
       <div class="case-Connecte">
 
         <?php if (!$context->getSessionAttribute('userId')): ?>
-          <?php echo "pas ok"; ?>
           <button type="submit" id="btn-connecte" class="w3-button w3-hover-black "><a href="#">Connectez vous</a></button>
 
         <?php else: ?>
@@ -38,6 +37,22 @@
           console.log(res);
           $( "#mainContent" ).html(res);
       });
+  });
+
+  $('#btn-deconnecte').click(function(){
+      // console.log('ok');
+      $.get("monApplicationAjax.php?action=logout",function(res){
+          console.log(res);
+          $.get("monApplicationAjax.php?action=header",function(res){
+              console.log(res);
+              $( "#header" ).html(res);
+          })
+          $.get("monApplicationAjax.php?action=index",function(res){
+              console.log(res);
+              $( "#mainContent" ).html(res);
+          });
+      });
+
   });
 
 </script>

@@ -15,7 +15,6 @@ class mainController
 	}
 
 	public static function index($request,$context){
-		// echo "ok";
 		return context::SUCCESS;
 	}
 
@@ -98,6 +97,16 @@ class mainController
 	// 	return context::SUCCESS;
 	// }
 
+	public static function logout($request, $context){
+		if($context->getSessionAttribute('userId') != NUll)
+		{
+			session_unset(); 
+			session_destroy(); 
+		}
+		// header("location:monApplicationAjax.php?action=index"); 
+		// return mainController::index($request, $context);
+		return context::SUCCESS;
+	}
 
 	public static function getUserByIdTest($request, $context){
 		if(isset($request['id'])){
