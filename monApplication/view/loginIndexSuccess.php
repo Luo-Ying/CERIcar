@@ -1,8 +1,3 @@
-<?php
-
-
-
-?>
 
   <div class="demo">
     <div class="login">
@@ -21,19 +16,13 @@
                     <input id="case-pass" type="password" class="login__input pass" placeholder="Password"/>
                 </div>
                 <button id="btn-connecter" type="button" class="login__submit">Connecter</button>
-                <p class="login__signup">Vous n'avez pas un compte ? &nbsp;<a>Inscrirz-vous</a></p>
+                <p class="login__signup">Vous n'avez pas un compte ? &nbsp;<a id="link-inscrire">Inscrez-vous</a></p>
             </div>
         </div>
     </div>
 </div>
 
 
-<!-- check login -->
-<?php
-
-
-
-?>
 
 
 <script>
@@ -64,13 +53,14 @@
         success:function(reponse){
             $("#banner-notification").html(reponse);
 
-            setTimeout(function(){
-                $("#banner-notification").show();
-            }, 500);
+                setTimeout(function(){ 
+                    $("#banner-notification").show();
+                }, 500);
 
-            setTimeout(function(){
-                $("#banner-notification").css('display', 'none');
-            }, 2500);
+                setTimeout(function(){ 
+                    $("#banner-notification").css('display', 'none');
+                }, 2500);
+
             },
             error: console.error
         });
@@ -115,6 +105,13 @@
             displayBanner("Le champ de Username ou Password est onligatoire !", "warning", "error")
             console.log("manquante des truc");
         }
+    });
+
+    $("#link-inscrire").click(function(){
+        $.get("monApplicationAjax.php?action=register",function(res){
+          console.log(res);
+          $( "#mainContent" ).html(res);
+        });
     });
 
 </script>

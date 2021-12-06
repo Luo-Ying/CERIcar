@@ -22,6 +22,10 @@ class mainController
 		return context::SUCCESS;
 	}
 
+	public static function register($request, $context){
+		return context::SUCCESS;
+	}
+
 	public static function banner(array $request, $context)
 	{
 		$trajet = trajetTable::getTrajet($request['depart'], $request['arrivee']);
@@ -31,7 +35,7 @@ class mainController
 		if(isset($request['message'])){
 			$context->message = $request['message'];
 			$context->criticality = $request['criticality'] ?? 'success';
-			$context->title = $request['title'];
+			$context->title = $request['title'] ?? 'success';
 		}
 		// verifier le cherche de la voyage
 		if((isset($request['depart']) && isset($request['arrivee'])) && (($request['depart'] != null) && ($request['arrivee'] != null))){
@@ -103,23 +107,40 @@ class mainController
 			session_unset(); 
 			session_destroy(); 
 		}
-		// header("location:monApplicationAjax.php?action=index"); 
-		// return mainController::index($request, $context);
 		return context::SUCCESS;
 	}
 
 	public static function getUserByIdTest($request, $context){
 		if(isset($request['id'])){
 			$context->id = $request['id'];
-			$user = utilisateurTable::getUserById($context->id);
+			$user = utilisateurTable::getUserByUsername($context->id);
 			$context->user = $user;
 			return context::SUCCESS;
 		}
 	}
 
+	public static function checkUserName($request, $context){
+		if(isset($request['identifiant'])){
+			$user = utilisateurTable::getUserByUsername($request['identifiant']);
+			if(!$user){
+				echo "userName:ok";
+				return context::SUCCESS;
+			}
+			echo "userName:exist";
+			return context::ERROR;
+		}
+		return context::ERROR;
+	}
+
+	public static function addNewUser($request, $context){
+		if(isset($request['identifiant']) && isset($request['nom']) && isset($request['prenom']) && isset($request['pass']) && isset($request['avatar'])){
+			utilisateurTable::addNewUser($request['identifiant'], $request['nom'], $request['prenom'], $request['pass'], $request['avatar']);
+		}
+		return $context::ERROR;
+	}
+
 
 	public static function trajetTest($request, $context){
-		// echo "ok";
 		if(isset($request['depart']) and isset($request['arrivee'])){
 			$context->depart = $request['depart'];
 			$context->arrivee = $request['arrivee'];
