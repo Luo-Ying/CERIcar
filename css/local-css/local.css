@@ -435,6 +435,11 @@ input {
   font-size: 1.5rem;
   background: transparent;
   color: #FDFCFD;
+  border: 1px solid rgb(11, 59, 59);
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  background: rgba(20, 20, 20, 0);
 }
 
 .login__submit {
@@ -465,7 +470,48 @@ input {
   transition: width 0.3s 0.15s, font-size 0.1s 0.15s;
 }
 
-.login__submit:after, .register__submit:after {
+#section-nbVoyageur{
+  position: absolute;
+  top: 370px;
+  left: 30%;
+  width: 450px;
+  height: 4rem;
+  margin-left: 10%;
+  background: #d7e7e4;
+  color: black;
+  border-radius: 3rem;
+  display: flex;
+  flex-direction: row;
+}
+
+.kirk-icon{
+  /* padding-left: 10px; */
+  margin-left: 25px;
+  margin-top: 10px;
+}
+
+.imgNbVoyageur{
+  height: 3rm;
+  width: 3rm;
+}
+
+.reserverVoyage {
+  /* position: relative; */
+  /* margin-left: 50%; */
+  /* left: 57%; */
+  width: 150px;
+  height: 4rem;
+  color: rgba(255, 255, 255, 0.8);
+  background: #17968f;
+  font-size: 1.5rem;
+  border-radius: 3rem;
+  cursor: pointer;
+  overflow: hidden;
+  transition: width 0.3s 0.15s, font-size 0.1s 0.15s;
+  margin-left: 250px;
+}
+
+.login__submit:after, .register__submit:after, .reserverVoyage:after {
   content: "";
   /* position: absolute; */
   top: 30%;
@@ -482,23 +528,23 @@ input {
   opacity: 0;
 }
 
-.login__submit.processing, .register__submit.processing {
+.login__submit.processing, .register__submit.processing, .reserverVoyage.processing {
   width: 4rem;
   font-size: 0;
 }
 
-.login__submit.processing:after, .register__submit.processing:after {
+.login__submit.processing:after, .register__submit.processing:after, .reserverVoyage.processing:after {
   opacity: 1;
   animation: rotate 0.5s 0.4s infinite linear;
 }
 
-.login__submit.success, .register__submit.success {
+.login__submit.success, .register__submit.success, .reserverVoyage.success  {
   transition: transform 0.3s 0.1s ease-out, opacity 0.1s 0.3s, background-color 0.1s 0.3s;
   transform: scale(30);
   opacity: 0.9;
 }
 
-.login__submit.success:after, .register__submit.success:after {
+.login__submit.success:after, .register__submit.success:after, .reserverVoyage.success:after {
   transition: opacity 0.1s 0s;
   opacity: 0;
   animation: none;

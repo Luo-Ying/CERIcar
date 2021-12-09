@@ -15,26 +15,27 @@
                     <svg class="login__icon name svg-icon" viewBox="0 0 20 20">
                         <path d="M0,20 a10,8 0 0,1 20,0z M10,0 a4,4 0 0,1 0,8 a4,4 0 0,1 0,-8" />
                     </svg>
-                    <input id="case-newUserName" type="text" class="login__input name" placeholder="Username"/>
+                    <input id="case-newUserName" type="text" class="login__input name" placeholder="Username" oninput="return userNameValidation(this.value)"/>
                 </div>
                 <div id="warning-userNameExist" style="color: red; display:none; ">Le Username existe déja</div>
+                <!-- <div></div> -->
                 <div class="login__row">
                     <svg class="login__icon name svg-icon" viewBox="0 0 20 20">
                         <path d="M0,20 a10,8 0 0,1 20,0z M10,0 a4,4 0 0,1 0,8 a4,4 0 0,1 0,-8" />
                     </svg>
-                    <input id="case-newNom" type="text" class="login__input name" placeholder="Votre nom de la famille"/>
+                    <input id="case-newNom" type="text" class="login__input name" placeholder="Votre nom de la famille" oninput="return userNameValidation(this.value)"/>
                 </div>
                 <div class="login__row">
                     <svg class="login__icon name svg-icon" viewBox="0 0 20 20">
                         <path d="M0,20 a10,8 0 0,1 20,0z M10,0 a4,4 0 0,1 0,8 a4,4 0 0,1 0,-8" />
                     </svg>
-                    <input id="case-newPrenom" type="text" class="login__input name" placeholder="Votre prenom"/>
+                    <input id="case-newPrenom" type="text" class="login__input name" placeholder="Votre prenom" oninput="return userNameValidation(this.value)"/>
                 </div>
                 <div class="login__row">
                     <svg class="login__icon pass svg-icon" viewBox="0 0 20 20">
                         <path d="M0,20 20,20 20,8 0,8z M10,13 10,16z M4,8 a6,8 0 0,1 12,0" />
                     </svg>
-                    <input id="case-newPassword" type="password" class="login__input pass" placeholder="Password"/>
+                    <input id="case-newPassword" type="password" class="login__input pass" placeholder="Password" oninput="return passwordValidation(this.value)"/>
                 </div>
                 <div class="login__row">
                     <svg class="login__icon pass svg-icon" viewBox="0 0 20 20">
@@ -112,7 +113,10 @@
     }
 
     $("#btn-inscrire").click(function(res){
-        if($('#case-newPassword').val() == $('#case-confirmNewPassword').val()){
+        if(!$('#case-newUserName').val() || !$('#case-newNom').val() || !$('#case-newPrenom').val() || !$('#case-newPassword').val() || !$('#case-newUserAvatar').val()){
+            error: console.error;
+        }
+        else if($('#case-newPassword').val() == $('#case-confirmNewPassword').val()){
             console.log("ok");
             $("#warning-confirmNewPassword").css('display', 'none');
             $.ajax({

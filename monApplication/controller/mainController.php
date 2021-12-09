@@ -158,6 +158,32 @@ class mainController
 		return context::SUCCESS;
 	}
 
+	public static function pageReservationVoyage($request, $context){
+		if( isset($request['idVoyage'])
+		&& isset($request['heureDepart']) 
+		&& isset($request['heureArrivee']) 
+		&& isset($request['villeDepart'])
+		&& isset($request['villeArrivee'])
+		&& isset($request['conducteur'])
+		&& isset($request['contraintes'])
+		&& isset($request['tarif'])){
+			// echo "function pageVoyage ok";
+			$context->pageVoyageIdVoyage = $request['idVoyage'];
+			// echo $context->pageVoyageIdVoyage;
+			$context->pageVoyageHeureDepart = $request['heureDepart'];
+			// echo $context->pageVoyageHeureDepart;
+			$context->pageVoyageHeureArrivee = $request['heureArrivee'];
+			$context->pageVoyageVilleDepart = $request['villeDepart'];
+			$context->pageVoyageVilleArrivee = $request['villeArrivee'];
+			$context->pageVoyageConducteur = $request['conducteur'];
+			$context->pageVoyageContraintes = $request['contraintes'];
+			// echo $context->pageVoyageContraintes;
+			$context->pageVoyageTarif = $request['tarif'];
+			return context::SUCCESS;
+		}
+		return context::ERROR;
+	}
+
 
 	public static function reservationsTest($request, $context){
 		if(isset($request['idVoyage'])){
