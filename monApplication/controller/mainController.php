@@ -79,6 +79,9 @@ class mainController
 				echo "is_login:true";
 				$context->setSessionAttribute('userId', $user->identifiant);
 				// $_SESSION['userId'] = $user->identifiant;
+				// $context->setSessionAttribute('userIdChiffre', $user->id);
+				$context->user = utilisateurTable::getUserByUsername($user->identifiant);
+				$context->setSessionAttribute('userIdChiffre', $context->user->id);
 				return context::ERROR;
 			}
 		}
@@ -110,10 +113,10 @@ class mainController
 		return context::SUCCESS;
 	}
 
-	public static function getUserByIdTest($request, $context){
+	public static function getUserByIdentifiant($request, $context){
 		if(isset($request['id'])){
-			$context->id = $request['id'];
-			$user = utilisateurTable::getUserByUsername($context->id);
+			$context->identifiant = $request['id'];
+			$user = utilisateurTable::getUserByUsername($context->identifiant);
 			$context->user = $user;
 			return context::SUCCESS;
 		}
@@ -135,6 +138,7 @@ class mainController
 	public static function addNewUser($request, $context){
 		if(isset($request['identifiant']) && isset($request['nom']) && isset($request['prenom']) && isset($request['pass']) && isset($request['avatar'])){
 			utilisateurTable::addNewUser($request['identifiant'], $request['nom'], $request['prenom'], $request['pass'], $request['avatar']);
+			return $context::SUCCESS;
 		}
 		return $context::ERROR;
 	}
@@ -187,6 +191,16 @@ class mainController
 			return context::SUCCESS;
 		}
 		return context::ERROR;
+	}
+
+	public static function reserveVoyage($request, $context){
+		echo "ok1";
+		if(isset($request['voyage']) && isset($request['voyageur'])){
+			echo "ok";
+			reservationTable::reserveVoyage($request['voyage'], $request['voyageur']);
+			return $context::SUCCESS;
+		}
+		return $context::ERROR;
 	}
 
 

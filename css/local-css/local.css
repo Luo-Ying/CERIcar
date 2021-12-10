@@ -474,8 +474,8 @@ input {
 }
 
 #section-nbVoyageur{
-  position: absolute;
-  top: 420px;
+  position: relative;
+  top: 30px;
   left: 30%;
   width: 450px;
   height: 4rem;

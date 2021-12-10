@@ -1,8 +1,13 @@
 
-<?php 
-    // var_dump($context->heure)
-?>
+<input id="pageReservationVoyage-idVoyage" value="<?php echo $context->pageVoyageIdVoyage; ?>" style="display: none;"/>
+<input id="pageReservationVoyage-idVoyageur" value="<?php 
+if($context->getSessionAttribute('userIdChiffre') != NULL){
+    echo $context->getSessionAttribute('userIdChiffre'); 
+}
+?>" style="display: none;"/>
 
+
+<div style="padding-top: 5%;">
 <div class="voyageCard-mainContainer"> 
     <div class="voyageCard-main">
         <div class="voyageCard-trajet">
@@ -52,7 +57,7 @@
     </div>
     <button id="btn-reserverVoyage" type="button" class="reserverVoyage">Réserver</button>
 </div>
-
+</div>
 
 <script>
 
@@ -104,6 +109,26 @@
         else{
             // $('.plus').innerHTML = imgPlusGray;
             $('.imgNbVoyageurPlus').attr("src", "./images/plusGray.png");
+        }
+    })
+
+    $('#btn-reserverVoyage').click(function(){
+        if(parseInt($('#chiffreNbPlaceRestant').html()) > 0){
+            $.ajax({
+                url: "monApplicationAjax.php?action=reserveVoyage",
+                type: "post",
+                data: {
+                    "voyage": $('#pageReservationVoyage-idVoyage').val(), 
+                    "voyageur": $('#pageReservationVoyage-idVoyageur').val(), 
+                },
+                success: function(data) {
+                    
+                },
+                error: function(xhr) {
+                    alert('error');
+                    alert(xhr);
+                }
+            });
         }
     })
 

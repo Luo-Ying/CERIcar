@@ -21,13 +21,13 @@ class utilisateurTable {
 		return $user; 
 	}
 
-	public static function getUserByUsername($id){		// identifiant
+	public static function getUserByUsername($identifiant){		// identifiant
 
 		$em = dbconnection::getInstance()->getEntityManager();
 
 		$userRepository = $em->getRepository('utilisateur');
 
-		$user = $userRepository->findOneBy(array('identifiant' => $id));
+		$user = $userRepository->findOneBy(array('identifiant' => $identifiant));
 
 		if($user == false){
 			echo 'Erreur sql';

@@ -22,6 +22,18 @@ class reservationTable{
         return $reservations;
 
     }
+
+    public static function reserveVoyage($voyage, $voyageur){
+
+		$em = dbconnection::getInstance()->getEntityManager();
+		$reservation = new reservation();
+
+		$reservation->voyage = $voyage;
+		$reservation->voyageur = $voyageur;
+
+		$em->persist($reservation);
+		$em->flush();
+	}
     
 }
 
