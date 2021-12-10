@@ -59,10 +59,6 @@ class utilisateurTable {
 		// return $bool;
 		$em->persist($utilisateur);
 		$em->flush();
-		return true;
-		
-		// $em->persist($utilisateur);
-		return false;
 	}
 
   

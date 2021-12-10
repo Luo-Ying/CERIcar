@@ -105,6 +105,9 @@ body, html {height: 100%}
   font-size: x-large;
 }
 
+.voyageCard-nbPlaceRestant{
+  padding-left: 56%;
+}
 
 
 
@@ -472,7 +475,7 @@ input {
 
 #section-nbVoyageur{
   position: absolute;
-  top: 370px;
+  top: 420px;
   left: 30%;
   width: 450px;
   height: 4rem;
@@ -490,14 +493,23 @@ input {
   margin-top: 10px;
 }
 
-.imgNbVoyageur{
-  height: 3rm;
-  width: 3rm;
+.imgNbVoyageurMoins{
+  height: 30px;
+  margin-left: 59px;
+  margin-top: 17px;
+  cursor: pointer;
+}
+
+.imgNbVoyageurPlus{
+  height: 30px;
+  margin-left: 135%;
+  margin-top: 17px;
+  cursor: pointer;
 }
 
 .reserverVoyage {
   /* position: relative; */
-  /* margin-left: 50%; */
+  margin-left: 29%;
   /* left: 57%; */
   width: 150px;
   height: 4rem;
@@ -508,7 +520,7 @@ input {
   cursor: pointer;
   overflow: hidden;
   transition: width 0.3s 0.15s, font-size 0.1s 0.15s;
-  margin-left: 250px;
+  /* margin-left: 15px; */
 }
 
 .login__submit:after, .register__submit:after, .reserverVoyage:after {

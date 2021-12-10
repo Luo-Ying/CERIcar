@@ -14,9 +14,23 @@
     // <-- methode GET -->
     $('#btn-Rechercher-voyages').click(function () {
         if(($('#case-depart').val() != "") && ($('#case-destination').val() != "")){
-            $.get("monApplicationAjax.php?action=searchVoyages&depart="+$('#case-depart').val()+"&arrivee="+$('#case-destination').val(), function(dataVoyage){
-                console.log(dataVoyage);
-                $( "#mainContent" ).html(dataVoyage);
+            // $.get("monApplicationAjax.php?action=searchVoyages&depart="+$('#case-depart').val()+"&arrivee="+$('#case-destination').val(), function(dataVoyage){
+            //     console.log(dataVoyage);
+            //     $( "#mainContent" ).html(dataVoyage);
+            // });
+            $.ajax({
+            url: "monApplicationAjax.php?action=searchVoyages",
+            type: "post",
+            data: {
+                "depart": $('#case-depart').val(),
+                "arrivee": $('#case-destination').val()
+            },
+            success:function(reponse){
+                
+                $("#mainContent").html(reponse);
+
+                },
+                error: console.error
             });
         }
         $.get("monApplicationAjax.php?action=banner&depart="+$('#case-depart').val()+"&arrivee="+$('#case-destination').val(), function(banner){

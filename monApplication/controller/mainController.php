@@ -153,8 +153,11 @@ class mainController
 	public static function searchVoyages($request, $context){
 		mainController::trajetTest($request, $context);
 		$voyages = voyageTable::getVoyagesByTrajet($context->trajet);
+		foreach( $voyages as $voyage ){
+			$voyage->nbPlaceRestant = voyageTable::getNbPlaceRestantByIdVoyage($voyage->id);
+			// echo $voyage->nbPlaceRestant;
+		}
 		$context->voyages = $voyages;
-		// $context->distance = $context->trajet->distance;
 		return context::SUCCESS;
 	}
 
@@ -166,7 +169,8 @@ class mainController
 		&& isset($request['villeArrivee'])
 		&& isset($request['conducteur'])
 		&& isset($request['contraintes'])
-		&& isset($request['tarif'])){
+		&& isset($request['tarif'])
+		&& isset($request['nbPlaceRestant'])){
 			// echo "function pageVoyage ok";
 			$context->pageVoyageIdVoyage = $request['idVoyage'];
 			// echo $context->pageVoyageIdVoyage;
@@ -179,6 +183,7 @@ class mainController
 			$context->pageVoyageContraintes = $request['contraintes'];
 			// echo $context->pageVoyageContraintes;
 			$context->pageVoyageTarif = $request['tarif'];
+			$context->pageVoyagenbPlaceRestant = $request['nbPlaceRestant'];
 			return context::SUCCESS;
 		}
 		return context::ERROR;

@@ -21,6 +21,18 @@ class voyageTable{
         return $voyages;
     }
 
+    public static function getNbPlaceRestantByIdVoyage($idVoyage){
+        $em = dbconnection::getInstance()->getEntityManager();
+
+		// $sql = "SELECT * from correspondances('$trajet->depart','$trajet->arrivee',$seats)";
+        $sql = "SELECT nbPlaceRestant('$idVoyage')";
+		$stmt = $em->getConnection()->prepare($sql);
+		$stmt->execute();
+        $nbPlaceRestant = $stmt->fetchAll();
+        // var_dump($nbPlaceRestant);
+        return $nbPlaceRestant[0]["nbplacerestant"];
+    }
+
 }
 
 ?>

@@ -3,19 +3,31 @@
     <div style="padding-left: 450px;">
     <br>
         <p> 
-            <?php echo sizeof($context->voyages) ?>
-            <?php if(sizeof($context->voyages) > 1){echo "voyages";}else{echo "voyage";}?> disponibles
+            <?php
+                $voyageNonDisponible = 0;
+                foreach($context->voyages as $voyage){
+                    if($voyage->nbPlaceRestant == 0){
+                        $voyageNonDisponible += 1;
+                    }
+                }
+                $nbVoyageDisponible = sizeof($context->voyages) - $voyageNonDisponible;
+            ?>
+            <?php echo $nbVoyageDisponible ?>
+            <?php if($nbVoyageDisponible > 1){echo "voyages";}else{echo "voyage";}?> disponibles
         </p>
     </div>
-    <!-- <p>123456</p> -->
-    <?php 
-        $i = 0; 
-        // $item = 0;
-    ?>
+    <input id="pageVoyage-isConnected" value="<?php 
+        if($context->getSessionAttribute('userId') != NUll){
+            echo "yes";
+        }else{
+            echo "no";
+        }
+    ?>" style="display: none;"/>
     <?php foreach( $context->voyages as $voyage ): ?>
+        <?php if($voyage->nbPlaceRestant > 0): ?>
         <br>
-        <!-- <a class="itemVoyage" href="#"> -->
-            <div class="voyageCard-mainContainer itemVoyage" style="cursor:pointer"> 
+        <div class="itemVoyage" style="cursor: pointer;">
+            <div class="voyageCard-mainContainer" style="cursor:pointer"> 
                 <div class="voyageCard-main">
                     <div class="voyageCard-trajet">
                         <div id="voyageHorraires" class="voyageCardTrajetHeureDepart&Arrivee">
@@ -50,11 +62,16 @@
                 <div class="voyageCard-tarif">
                     <?php echo $voyage->tarif."€" ?>
                     <input id="pageVoyage-tarif" value="<?php echo $voyage->tarif."€" ?>" style="display: none;"/>
+                    <input id="pageVoyage-nbPlaceRestant" value="<?php echo $voyage->nbPlaceRestant; ?>" style="display: none;"/>
                 </div>
             </div>
-        <!-- </a> -->
+            <div class="voyageCard-nbPlaceRestant">
+                <span>nombre places restatnt: </span> <?php echo $voyage->nbPlaceRestant; ?>
+            </div>
+        </div>
         <br><br><br>
         <?php $i=$i+1; ?>
+        <?php endif; ?>
     <?php endforeach; ?>
 </div>
 
@@ -69,28 +86,53 @@
 
     $('.itemVoyage').click(function(){
         // console.log($(this).closest('.voyageCard-mainContainer').find('#pageVoyage-contraintes'));
-        $.ajax({
-        url: "monApplicationAjax.php?action=pageReservationVoyage",
-        type: "post",
-        data:{
-            // message: message,
-            // criticality: criticality,
-            // title: title,
-            "idVoyage": $(this).closest('.voyageCard-mainContainer').find('#pageVoyage-idVoyage').val(),
-            "heureDepart": $(this).closest('.voyageCard-mainContainer').find('#pageVoyage-heureDepart').val(),
-            "heureArrivee": $(this).closest('.voyageCard-mainContainer').find('#pageVoyage-heureArrivee').val(),
-            "villeDepart": $(this).closest('.voyageCard-mainContainer').find('#pageVoyage-villeDepart').val(),
-            "villeArrivee": $(this).closest('.voyageCard-mainContainer').find('#pageVoyage-villeArrivee').val(),
-            "conducteur": $(this).closest('.voyageCard-mainContainer').find('#pageVoyage-conducteur').val(),
-            "contraintes": $(this).closest('.voyageCard-mainContainer').find('#pageVoyage-contraintes').val(),
-            "tarif": $(this).closest('.voyageCard-mainContainer').find('#pageVoyage-tarif').val(),
-        },
-        success:function(reponse){
-            // console.log($('#pageVoyage-contraintes').val());
-            $("#mainContent").html(reponse);
-        },
-            error: console.error
-        });
+        if($('#pageVoyage-isConnected').val() == "yes"){
+            console.log($(this).closest('.itemVoyage').find('#pageVoyage-nbPlaceRestant').val());
+            $.ajax({
+            url: "monApplicationAjax.php?action=pageReservationVoyage",
+            type: "post",
+            data:{
+                "idVoyage": $(this).closest('.itemVoyage').find('#pageVoyage-idVoyage').val(),
+                "heureDepart": $(this).closest('.itemVoyage').find('#pageVoyage-heureDepart').val(),
+                "heureArrivee": $(this).closest('.itemVoyage').find('#pageVoyage-heureArrivee').val(),
+                "villeDepart": $(this).closest('.itemVoyage').find('#pageVoyage-villeDepart').val(),
+                "villeArrivee": $(this).closest('.itemVoyage').find('#pageVoyage-villeArrivee').val(),
+                "conducteur": $(this).closest('.itemVoyage').find('#pageVoyage-conducteur').val(),
+                "contraintes": $(this).closest('.itemVoyage').find('#pageVoyage-contraintes').val(),
+                "tarif": $(this).closest('.itemVoyage').find('#pageVoyage-tarif').val(),
+                "nbPlaceRestant": $(this).closest('.itemVoyage').find('#pageVoyage-nbPlaceRestant').val(),
+            },
+            success:function(reponse){
+                // console.log($('#pageVoyage-contraintes').val());
+                $("#mainContent").html(reponse);
+            },
+                error: console.error
+            });
+        }
+        else{
+            $.ajax({
+            url: "monApplicationAjax.php?action=banner",
+            type: "post",
+            data: {
+                "message":"Connectez-vous pour réalité cette action !", 
+                "criticality":"warning",
+                "title":"error"
+            },
+            success:function(reponse){
+                $("#banner-notification").html(reponse);
+
+                    setTimeout(function(){ 
+                        $("#banner-notification").show();
+                    }, 500);
+
+                    setTimeout(function(){ 
+                        $("#banner-notification").css('display', 'none');
+                    }, 2500);
+
+                },
+                error: console.error
+            });
+        }
     });
 </script>
 

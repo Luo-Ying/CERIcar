@@ -113,7 +113,7 @@
     }
 
     $("#btn-inscrire").click(function(res){
-        if(!$('#case-newUserName').val() || !$('#case-newNom').val() || !$('#case-newPrenom').val() || !$('#case-newPassword').val() || !$('#case-newUserAvatar').val()){
+        if(!$('#case-newUserName').val() || !$('#case-newNom').val() || !$('#case-newPrenom').val() || !$('#case-newPassword').val()){
             error: console.error;
         }
         else if($('#case-newPassword').val() == $('#case-confirmNewPassword').val()){
