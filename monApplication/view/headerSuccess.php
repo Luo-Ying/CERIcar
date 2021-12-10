@@ -17,6 +17,7 @@
         <?php else: ?>
           Bienvenu !    
           <button type="submit" id="btn-profile" class="w3-button w3-hover-black "><a href="#"><?php echo $context->getSessionAttribute('userId') ?></a> </button>
+          <input id="pageProfil-userName" value="<?php echo $context->getSessionAttribute('userId'); ?>" style="display: none;"/>
           <button type="submit" id="btn-deconnecte" class="w3-button w3-hover-black "><a href="#">Deconnectez vous !</a></button>  
           <!-- <a href=monApplication.php?action=logout>Deconnectez vous !</a> -->
         <?php endif; ?>
@@ -54,5 +55,18 @@
       });
 
   });
+
+  $('#btn-profile').click(function(){
+    $.ajax({
+      url: "monApplicationAjax.php?action=profil",
+      type: "post",
+      data: {
+          identifiant: $('#pageProfil-userName').val()
+      },
+      success:function(reponse){
+          $("#mainContent").html(reponse);
+      }
+    });
+  })
 
 </script>

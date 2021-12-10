@@ -23,6 +23,28 @@ class reservationTable{
 
     }
 
+    public static function getReservationByVoyageur($idVoyageur){
+
+        // echo $voyage->trajet->id;
+        $em = dbconnection::getInstance()->getEntityManager();
+        $reservationRepository = $em->getRepository('reservation');
+        
+        // echo var_dump()
+        $reservations = $reservationRepository->findBy(
+            array('voyageur' => $idVoyageur)
+        );
+        // echo "ok";
+        // echo "<br>ok<br>";
+        // echo var_dump($reservations[0]->id);
+        if($reservations == false){
+            echo "Erreur sql";
+        }
+        //echo var_dump($reservations);
+
+        return $reservations;
+
+    }
+
     public static function reserveVoyage($voyageReservation, $voyageurReservation){
 
 		// $em = dbconnection::getInstance()->getEntityManager();

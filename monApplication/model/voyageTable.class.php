@@ -21,6 +21,25 @@ class voyageTable{
         return $voyages;
     }
 
+    public static function getVoyagesById($idVoyage){
+        $em = dbconnection::getInstance()->getEntityManager();
+        $voyageRepository = $em->getRepository('voyage');
+        
+        // $voyage = $voyageRepository->findBy(
+        //     // array('trajet' => $trajet->id),
+        //     // array('heureDepart' => 'ASC')
+            
+        // );
+        $voyage = $voyageRepository->findOneBy(array('id' => $idVoyage));
+        // echo "<br>ok<br>";
+        // echo var_dump($voyage);
+
+        if($voyage == false){
+            echo 'Erreur sql';
+        }
+        return $voyage;
+    }
+
     public static function getNbPlaceRestantByIdVoyage($idVoyage){
         $em = dbconnection::getInstance()->getEntityManager();
 
@@ -32,6 +51,7 @@ class voyageTable{
         // var_dump($nbPlaceRestant);
         return $nbPlaceRestant[0]["nbplacerestant"];
     }
+
 
 }
 

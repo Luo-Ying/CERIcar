@@ -40,12 +40,23 @@ $$ LANGUAGE plpgsql;
 DROP FUNCTION IF EXISTST reserveVoyage(idVoyage integer, idUser integer) cascade;
 
 CREATE OR REPLACE FUNCTION reserveVoyage(idVoyage integer, idUser integer)
-RETURN void 
+RETURNS void 
 AS $$
     BEGIN
         INSERT INTO jabaianb.reservation (voyage, voyageur) VALUES (idVoyage, idUser);
     END;
 $$ LANGUAGE plpgsql;
+
+
+
+-- retourner voyages reserve
+-- DROP FUNCTION IF EXISTST voyageReserveByUser(idUser integer) cascade;
+
+-- CREATE OR REPLACE FUNCTION voyageReserveByUser(idUser integer)
+-- RETURNS text[]
+-- AS $$
+--     DECLARE
+
 
 
 

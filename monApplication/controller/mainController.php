@@ -114,12 +114,29 @@ class mainController
 	}
 
 	public static function getUserByIdentifiant($request, $context){
-		if(isset($request['id'])){
-			$context->identifiant = $request['id'];
+		if(isset($request['identifiant'])){
+			$context->identifiant = $request['identifiant'];
 			$user = utilisateurTable::getUserByUsername($context->identifiant);
 			$context->user = $user;
 			return context::SUCCESS;
 		}
+	}
+
+	public static function profil($request, $context){
+		if(isset($request['identifiant'])){
+			// echo "pass";
+			$context->identifiant = $request['identifiant'];
+			// echo var_dump($context->identifiant);
+			$context->user = utilisateurTable::getUserByUsername($context->identifiant);
+			// echo var_dump($context->user);
+			// echo $context->user->id;
+			// echo var_dump(reservationTable::getReservationByVoyageur($context->user->id));
+			$context->reservationsOfUser = reservationTable::getReservationByVoyageur($context->user->id);
+			// echo var_dump($context->reservationsOfUser);
+			
+			return context::SUCCESS;
+		}
+		return context::ERROR;
 	}
 
 	public static function checkUserName($request, $context){
@@ -172,6 +189,7 @@ class mainController
 		&& isset($request['villeDepart'])
 		&& isset($request['villeArrivee'])
 		&& isset($request['conducteur'])
+		&& isset($request['conducteurIdentifiant'])
 		&& isset($request['contraintes'])
 		&& isset($request['tarif'])
 		&& isset($request['nbPlaceRestant'])){
@@ -184,6 +202,7 @@ class mainController
 			$context->pageVoyageVilleDepart = $request['villeDepart'];
 			$context->pageVoyageVilleArrivee = $request['villeArrivee'];
 			$context->pageVoyageConducteur = $request['conducteur'];
+			$context->pageVoyageConducteurIdentifiant = $request['conducteurIdentifiant'];
 			$context->pageVoyageContraintes = $request['contraintes'];
 			// echo $context->pageVoyageContraintes;
 			$context->pageVoyageTarif = $request['tarif'];

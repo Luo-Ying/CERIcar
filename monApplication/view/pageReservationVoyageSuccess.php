@@ -26,7 +26,8 @@ if($context->getSessionAttribute('userIdChiffre') != NULL){
         <div class="voyageCard-conducteur">
             <div class="voyageCard-conducteur-photo"></div>
             <div class="voyageCard-conducteur-nom">
-                <?php echo $context->pageVoyageConducteur; ?>
+                <a href="#" id="link-profil-conducteur"><?php echo $context->pageVoyageConducteur; ?></a>
+                <input id="profil-conducteur" value="<?php echo $context->pageVoyageConducteurIdentifiant ?>" style="display: none;"/>
             </div>
         </div>
     </div>
@@ -131,7 +132,41 @@ if($context->getSessionAttribute('userIdChiffre') != NULL){
                     }
                 });
             }
+            $.ajax({
+            url: "monApplicationAjax.php?action=banner",
+            type: "post",
+            data: {
+                "message":" Reservation reussit !"
+            },
+            success:function(reponse){
+                $("#banner-notification").html(reponse);
+
+                    setTimeout(function(){ 
+                        $("#banner-notification").show();
+                    }, 500);
+
+                    setTimeout(function(){ 
+                        $("#banner-notification").css('display', 'none');
+                    }, 2500);
+
+                },
+                error: console.error
+            });
         }
+    })
+
+
+    $('#link-profil-conducteur').click(function(){
+        $.ajax({
+        url: "monApplicationAjax.php?action=profil",
+        type: "post",
+        data: {
+            identifiant: $('#profil-conducteur').val()
+        },
+        success:function(reponse){
+            $("#mainContent").html(reponse);
+        }
+        });
     })
 
 </script>
