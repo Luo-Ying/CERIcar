@@ -23,16 +23,25 @@ class reservationTable{
 
     }
 
-    public static function reserveVoyage($voyage, $voyageur){
+    public static function reserveVoyage($voyageReservation, $voyageurReservation){
 
-		$em = dbconnection::getInstance()->getEntityManager();
-		$reservation = new reservation();
+		// $em = dbconnection::getInstance()->getEntityManager();
+		// $reservation = new reservation();
 
-		$reservation->voyage = $voyage;
-		$reservation->voyageur = $voyageur;
+		// $reservation->voyage = $voyageReservation;
+		// $reservation->voyageur = $voyageurReservation;
 
-		$em->persist($reservation);
-		$em->flush();
+		// $em->persist($reservation);
+		// $em->flush();
+        $em = dbconnection::getInstance()->getEntityManager();
+
+		// $sql = "SELECT * from correspondances('$trajet->depart','$trajet->arrivee',$seats)";
+        $sql = "SELECT reserveVoyage('$voyageReservation', '$voyageurReservation')";
+		$stmt = $em->getConnection()->prepare($sql);
+		$stmt->execute();
+        // $nbPlaceRestant = $stmt->fetchAll();
+        // // var_dump($nbPlaceRestant);
+        // return $nbPlaceRestant[0]["nbplacerestant"];
 	}
     
 }

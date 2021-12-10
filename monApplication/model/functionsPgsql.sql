@@ -36,6 +36,19 @@ $$ LANGUAGE plpgsql;
 
 
 
+-- reserve un voyage
+DROP FUNCTION IF EXISTST reserveVoyage(idVoyage integer, idUser integer) cascade;
+
+CREATE OR REPLACE FUNCTION reserveVoyage(idVoyage integer, idUser integer)
+RETURN void 
+AS $$
+    BEGIN
+        INSERT INTO jabaianb.reservation (voyage, voyageur) VALUES (idVoyage, idUser);
+    END;
+$$ LANGUAGE plpgsql;
+
+
+
 -- recherche voyages pour correspondance
 DROP FUNCTION IF EXISTS searchVoyageCorrespondance() cascade;
 

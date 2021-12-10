@@ -194,7 +194,7 @@ class mainController
 	}
 
 	public static function reserveVoyage($request, $context){
-		echo "ok1";
+		echo "oasdbas,jhbfl.ewjnf.kSNFc.JBEJfvhbzdr,jhgejrbg,mzdbjhb,djhfbvkashbflauiwhebvf,kasjebgwehesj vks.jncf,j";
 		if(isset($request['voyage']) && isset($request['voyageur'])){
 			echo "ok";
 			reservationTable::reserveVoyage($request['voyage'], $request['voyageur']);

@@ -39,12 +39,9 @@ class utilisateurTable {
 
 
 	public static function addNewUser($identifiantUser, $nomUser, $prenomUser, $passUser, $avatarUser){
-		// $em = dbconnection::getInstance()->getEntityManager()->getConnection() ;
+		
 		$em = dbconnection::getInstance()->getEntityManager();
-		// $query = $em->prepare('select addNewUser('+$identifiantUser+','+ $passUser+','+ $nomUser+','+ $prenomUser+','+ $avatarUser+')');
-		// $bool = $query->execute();
-		// echo "ok";
-		// echo $bool;
+
 		$utilisateur = new utilisateur();
 
 		$utilisateur->identifiant = $identifiantUser;
@@ -52,11 +49,7 @@ class utilisateurTable {
 		$utilisateur->nom = $nomUser;
 		$utilisateur->prenom = $prenomUser;
 		$utilisateur->avatar = $avatarUser;
-		// if ($bool == false){
-		// 	return NULL;
-		// }
-		// return $query->fetchAll(); // retourne un tableau d'enregistrements (tableau de tableaux de valeurs)
-		// return $bool;
+
 		$em->persist($utilisateur);
 		$em->flush();
 	}

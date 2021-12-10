@@ -114,21 +114,23 @@ if($context->getSessionAttribute('userIdChiffre') != NULL){
 
     $('#btn-reserverVoyage').click(function(){
         if(parseInt($('#chiffreNbPlaceRestant').html()) > 0){
-            $.ajax({
-                url: "monApplicationAjax.php?action=reserveVoyage",
-                type: "post",
-                data: {
-                    "voyage": $('#pageReservationVoyage-idVoyage').val(), 
-                    "voyageur": $('#pageReservationVoyage-idVoyageur').val(), 
-                },
-                success: function(data) {
-                    
-                },
-                error: function(xhr) {
-                    alert('error');
-                    alert(xhr);
-                }
-            });
+            for(var i=0; i<parseInt($('#chiffreNbPlaceRestant').html()); i++){
+                $.ajax({
+                    url: "monApplicationAjax.php?action=reserveVoyage",
+                    type: "post",
+                    data: {
+                        voyage : $('#pageReservationVoyage-idVoyage').val(), 
+                        voyageur : $('#pageReservationVoyage-idVoyageur').val(), 
+                    },
+                    success: function(data) {
+                        console.log("reussit reservation!");
+                    },
+                    error: function(xhr) {
+                        alert('error');
+                        alert(xhr);
+                    }
+                });
+            }
         }
     })
 
