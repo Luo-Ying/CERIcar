@@ -6,7 +6,7 @@
             if($context->getSessionAttribute('userId')):
               // if($_SESSION['userId']): 
           ?>
-          <a href="#" class="w3-bar-item w3-button w3-hover-black w3-border-white w3-bottombar w3-hover-border-gray">Proposez un voyage</a>
+          <a id="btn-proposerVoyage" href="#" class="w3-bar-item w3-button w3-hover-black w3-border-white w3-bottombar w3-hover-border-gray">Proposez un voyage</a>
           <?php endif; ?>
       </div>
       <div class="case-Connecte">
@@ -66,6 +66,13 @@
       success:function(reponse){
           $("#mainContent").html(reponse);
       }
+    });
+  })
+
+  $('#btn-proposerVoyage').click(function(){
+    $.get("monApplicationAjax.php?action=proposerVoyageIndex",function(res){
+        console.log(res);
+        $( "#mainContent" ).html(res);
     });
   })
 

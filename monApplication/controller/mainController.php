@@ -26,6 +26,38 @@ class mainController
 		return context::SUCCESS;
 	}
 
+	public static function proposerVoyageIndex($request, $context){
+		return context::SUCCESS;
+	}
+
+	public static function proposerVoyageSuivant($request, $context){
+		if(isset($request['depart']) and isset($request['arrivee']) and isset($request['nbPlace'])){
+			$context->trajetProposer = trajetTable::getTrajet($request['depart'], $request['arrivee']);
+			$context->nbPlace = $request['nbPlace'];
+			return context::SUCCESS;
+		}
+		return context::ERROR;
+	}
+
+	public static function proposerVoyage($request, $context){
+		var_dump($request);
+		if(isset($request['conducteur']) 
+		&& isset($request['trajet']) 
+		&& isset($request['tarif'])
+		&& isset($request['nbPlace'])
+		&& isset($request['heuredepart'])
+		&& isset($request['contraintes'])){
+			// echo "okskdlfkjsabvlniuabe;rlkgnvSL";
+			voyageTable::proposerVoyage($request['conducteur'],
+										$request['trajet'],
+										$request['tarif'],
+										$request['nbPlace'],
+										$request['heuredepart'],
+										$request['contraintes']);
+			return context::SUCCESS;
+		}
+	}
+
 	public static function banner(array $request, $context)
 	{
 		$trajet = trajetTable::getTrajet($request['depart'], $request['arrivee']);
@@ -38,24 +70,24 @@ class mainController
 			$context->title = $request['title'] ?? 'success';
 		}
 		// verifier le cherche de la voyage
-		if((isset($request['depart']) && isset($request['arrivee'])) && (($request['depart'] != null) && ($request['arrivee'] != null))){
-			if($context->hasVoyages) {
-				$context->message = 'Recherche terminée ';
-				$context->criticality = 'success';
-				$context->title = 'success';
-			} 
-			else {
-				$context->message = 'Il n\'y a pas de trajet !';
-				$context->criticality = 'alert';
-				$context->title = 'warning';
-			}
-		}
-		// else{
-		else if((isset($request['depart']) && isset($request['arrivee'])) && (($request['depart'] == null) && ($request['arrivee'] == null))){
-			$context->message = 'Le champ de départ ou Destination est onligatoire !';
-			$context->criticality = 'warning';
-			$context->title = 'error';
-		}
+		// if((isset($request['depart']) && isset($request['arrivee'])) && (($request['depart'] != null) && ($request['arrivee'] != null))){
+		// 	if($context->hasVoyages) {
+		// 		$context->message = 'Recherche terminée ';
+		// 		$context->criticality = 'success';
+		// 		$context->title = 'success';
+		// 	} 
+		// 	else {
+		// 		$context->message = 'Il n\'y a pas de trajet !';
+		// 		$context->criticality = 'alert';
+		// 		$context->title = 'warning';
+		// 	}
+		// }
+		// // else{
+		// else if((isset($request['depart']) && isset($request['arrivee'])) && (($request['depart'] == null) && ($request['arrivee'] == null))){
+		// 	$context->message = 'Le champ de départ ou Destination est onligatoire !';
+		// 	$context->criticality = 'warning';
+		// 	$context->title = 'error';
+		// }
 		// }
 		// TODO: [Poste d\'annonce reussit...] / [xxxx(champ) est obligatoire !]
 
@@ -213,9 +245,9 @@ class mainController
 	}
 
 	public static function reserveVoyage($request, $context){
-		echo "oasdbas,jhbfl.ewjnf.kSNFc.JBEJfvhbzdr,jhgejrbg,mzdbjhb,djhfbvkashbflauiwhebvf,kasjebgwehesj vks.jncf,j";
+		// echo "oasdbas,jhbfl.ewjnf.kSNFc.JBEJfvhbzdr,jhgejrbg,mzdbjhb,djhfbvkashbflauiwhebvf,kasjebgwehesj vks.jncf,j";
 		if(isset($request['voyage']) && isset($request['voyageur'])){
-			echo "ok";
+			// echo "ok";
 			reservationTable::reserveVoyage($request['voyage'], $request['voyageur']);
 			return $context::SUCCESS;
 		}
@@ -223,29 +255,34 @@ class mainController
 	}
 
 
-	public static function reservationsTest($request, $context){
-		if(isset($request['idVoyage'])){
-			$context->idVoyage = $request['idVoyage'];
-			// echo $context->idVoyage;
-			mainController::searchVoyages($request, $context);
-			// echo "nb voyages: ", sizeof($context->voyages), "<br>";
-			// echo "id voyage: ", $context->voyages[0]->trajet->id, "<br>";
-			foreach($context->voyages as $voyage){
-				// echo "<br>ok<br>";
-				// echo $voyage->id;
-				// if()
-				// echo $voyage->id, "<br>";
-				// echo $context->idVoyage, "<br>";
-				if($voyage->id == $context->idVoyage){
-					// echo "<br>ok<br>";
-					$context->voyage = $voyage;
-					$reservations = reservationTable::getReservationByVoyage($context->voyage);
+	// public static function reservationsTest($request, $context){
+	// 	if(isset($request['idVoyage'])){
+	// 		$context->idVoyage = $request['idVoyage'];
+	// 		// echo $context->idVoyage;
+	// 		mainController::searchVoyages($request, $context);
+	// 		// echo "nb voyages: ", sizeof($context->voyages), "<br>";
+	// 		// echo "id voyage: ", $context->voyages[0]->trajet->id, "<br>";
+	// 		foreach($context->voyages as $voyage){
+	// 			// echo "<br>ok<br>";
+	// 			// echo $voyage->id;
+	// 			// if()
+	// 			// echo $voyage->id, "<br>";
+	// 			// echo $context->idVoyage, "<br>";
+	// 			if($voyage->id == $context->idVoyage){
+	// 				// echo "<br>ok<br>";
+	// 				$context->voyage = $voyage;
+	// 				$reservations = reservationTable::getReservationByVoyage($context->voyage);
 				
-				}
-			}
-			$context->reservations = $reservations;
-			return context::SUCCESS;
-			// echo $context->voyage->id;
-		}
-	}
+	// 			}
+	// 		}
+	// 		$context->reservations = $reservations;
+	// 		return context::SUCCESS;
+	// 		// echo $context->voyage->id;
+	// 	}
+	// }
+
+	// public static function proposerVoyage($request, $context){
+		
+	// }
+
 }

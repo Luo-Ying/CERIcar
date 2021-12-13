@@ -33,16 +33,31 @@
                 error: console.error
             });
         }
-        $.get("monApplicationAjax.php?action=banner&depart="+$('#case-depart').val()+"&arrivee="+$('#case-destination').val(), function(banner){
-            console.log(banner);
-            $( "#banner-notification" ).html( banner );
-            setTimeout(function(){
-                $("#banner-notification").show();
-            }, 500);
-            setTimeout(function(){
-                $("#banner-notification").css('display', 'none');
-            }, 2500);
-        });
+        else{
+            $.ajax({
+            url: "monApplicationAjax.php?action=banner",
+            type: "post",
+            data: {
+                "message":"Le champ de départ ou Destination est onligatoire !", 
+                "criticality":"warning",
+                "title":"error"
+            },
+            success:function(reponse){
+                $("#banner-notification").html(reponse);
+
+                    setTimeout(function(){ 
+                        $("#banner-notification").show();
+                    }, 500);
+
+                    setTimeout(function(){ 
+                        $("#banner-notification").css('display', 'none');
+                    }, 2500);
+
+                },
+                error: console.error
+            });
+        }
+
     })
 
     $('#btn-home').click(function(){

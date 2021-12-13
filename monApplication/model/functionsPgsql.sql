@@ -49,15 +49,17 @@ $$ LANGUAGE plpgsql;
 
 
 
--- retourner voyages reserve
--- DROP FUNCTION IF EXISTST voyageReserveByUser(idUser integer) cascade;
+-- proposer un voyage
+DROP FUNCTION IF EXISTST proposerVoyage(idConducteur integer, idTrajet integer, tarif integer, nbPlace integer, heureDepart integer, contraintes VARCHAR) cascade;
 
--- CREATE OR REPLACE FUNCTION voyageReserveByUser(idUser integer)
--- RETURNS text[]
--- AS $$
---     DECLARE
-
-
+CREATE OR REPLACE FUNCTION proposerVoyage(idConducteur integer, idTrajet integer, tarif integer, nbPlace integer, heureDepart integer, contraintes VARCHAR)
+RETURNS void 
+AS $$
+    BEGIN
+        INSERT INTO jabaianb.voyage (conducteur, trajet, tarif, nbplace, heuredepart, contraintes) 
+        VALUES (idConducteur, idTrajet, tarif, nbPlace, heureDepart, contraintes);
+    END;
+$$ LANGUAGE plpgsql;
 
 
 -- recherche voyages pour correspondance

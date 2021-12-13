@@ -53,6 +53,34 @@ class voyageTable{
     }
 
 
+    public static function proposerVoyage($conducteurVoyageProposer, 
+        $trajetVoyageProposer, 
+        $tarifVoyageProposer,
+        $nbPlaceVoyageProposer,
+        $heuredepartVoyageProposer,
+        $contraintesVoyageProposer){
+        
+        // echo $conducteurVoyageProposer;
+        // echo $trajetVoyageProposer;
+        // echo $tarifVoyageProposer;
+        // echo $nbPlaceVoyageProposer;
+        // echo $heuredepartVoyageProposer;
+        // echo $contraintesVoyageProposer;
+        $em = dbconnection::getInstance()->getEntityManager();
+
+        $sql = "SELECT proposerVoyage('$conducteurVoyageProposer', 
+                                    '$trajetVoyageProposer', 
+                                    '$tarifVoyageProposer',
+                                    '$nbPlaceVoyageProposer',
+                                    '$heuredepartVoyageProposer',
+                                    '$contraintesVoyageProposer')";
+		$stmt = $em->getConnection()->prepare($sql);
+		$var = $stmt->execute();
+
+        echo $var;
+        echo $stmt;
+	}
+
 }
 
 ?>

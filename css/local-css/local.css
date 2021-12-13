@@ -1,5 +1,8 @@
 body,h1 {font-family: "Raleway", sans-serif}
-body, html {height: 100%}
+body, html {
+  height: 100%;
+  block-size: 100%;
+}
 #page,#page_maincontent{
   height: 100%;
 }
@@ -572,6 +575,28 @@ input {
   cursor: pointer;
 }
 
+/* css of card proposer voyage */
+
+.cardProposerVoyage {
+  box-shadow: 0 1rem 2rem hsl(0 0% 0% / 20%);
+  
+  background: hsl(0 0% 100%);
+  color: hsl(200 50% 20%);
+  line-height: 1.5;
+  font-size: 1.5rem;
+  font-weight: 300;
+  width: 70vmin;
+  height: 65vmin;
+  padding: 3ch;
+  border-radius: 2ch;
+  border: 1px solid hsl(0 0% 83%);
+  margin-left:34%;
+  margin-top:5%;
+}
+ 
+.better {
+  box-shadow: 0 2.5rem 2rem -2rem hsl(200 50% 20% / 40%);
+}
 
 @keyframes rotate {
   to {
@@ -584,3 +609,4 @@ input {
     stroke-dashoffset: 0;
   }
 }
+
