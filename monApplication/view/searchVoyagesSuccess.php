@@ -35,7 +35,7 @@
                             <p><?php echo $voyage->heureDepart."h"; ?></p>
                             <input id="pageVoyage-heureDepart" value="<?php echo $voyage->heureDepart."h"; ?>" style="display: none;"/>
                             <br>
-                            <p><?php echo round($voyage->heureDepart+($voyage->trajet->distance/60))."h".$voyage->trajet->distance%60; ?></p>
+                            <p><?php echo (round($voyage->heureDepart+($voyage->trajet->distance/60))%24)."h".$voyage->trajet->distance%60; ?></p>
                             <input id="pageVoyage-heureArrivee" value="<?php echo round($voyage->heureDepart+($voyage->trajet->distance/60))."h".$voyage->trajet->distance%60; ?>" style="display: none;"/>
                         </div>
                         <div class="barHeuresTrajet"></div>

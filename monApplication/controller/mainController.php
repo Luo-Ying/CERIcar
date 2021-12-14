@@ -45,8 +45,7 @@ class mainController
 		&& isset($request['trajet']) 
 		&& isset($request['tarif'])
 		&& isset($request['nbPlace'])
-		&& isset($request['heuredepart'])
-		&& isset($request['contraintes'])){
+		&& isset($request['heuredepart'])){
 			// echo "okskdlfkjsabvlniuabe;rlkgnvSL";
 			voyageTable::proposerVoyage($request['conducteur'],
 										$request['trajet'],
@@ -165,7 +164,8 @@ class mainController
 			// echo var_dump(reservationTable::getReservationByVoyageur($context->user->id));
 			$context->reservationsOfUser = reservationTable::getReservationByVoyageur($context->user->id);
 			// echo var_dump($context->reservationsOfUser);
-			
+			$context->propositionVoyageOfUser = voyageTable::getVoyageByConducteur($context->user->id);
+
 			return context::SUCCESS;
 		}
 		return context::ERROR;

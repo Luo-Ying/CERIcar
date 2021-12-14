@@ -40,6 +40,21 @@ class voyageTable{
         return $voyage;
     }
 
+
+    public static function getVoyageByConducteur($idConducteur){
+        $em = dbconnection::getInstance()->getEntityManager();
+        $propositionVoyageRepository = $em->getRepository('voyage');
+        
+        $propositionVoyage = $propositionVoyageRepository->findBy(
+            array('conducteur' => $idConducteur)
+        );
+        if($propositionVoyage == false){
+            echo "Erreur sql";
+        }
+
+        return $propositionVoyage;
+    }
+
     public static function getNbPlaceRestantByIdVoyage($idVoyage){
         $em = dbconnection::getInstance()->getEntityManager();
 

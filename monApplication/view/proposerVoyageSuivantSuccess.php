@@ -61,7 +61,29 @@ style="  box-shadow: 0 1rem 2rem hsl(0 0% 0% / 20%);
                 contraintes: $('#case-contraintes').val(), 
             },
             success:function(res){
-                
+                $.ajax({
+                url: "monApplicationAjax.php?action=banner",
+                type: "post",
+                data:{
+                    message: "Proposition à accepté! ",
+                },
+                success:function(reponse){
+                    $.get("monApplicationAjax.php?action=index",function(res){
+                        console.log(res);
+                        $( "#mainContent" ).html(res);
+                    });
+                    $("#banner-notification").html(reponse);
+
+                        setTimeout(function(){ 
+                            $("#banner-notification").show();
+                        }, 500);
+
+                        setTimeout(function(){ 
+                            $("#banner-notification").css('display', 'none');
+                        }, 2500);
+
+                    },
+                });
             }
             
         });
