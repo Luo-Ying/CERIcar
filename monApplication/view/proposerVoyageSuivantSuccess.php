@@ -49,29 +49,56 @@ style="  box-shadow: 0 1rem 2rem hsl(0 0% 0% / 20%);
 <script>
 
     $('#btn-proposeVoyage').click(function(){
-        $.ajax({
-            url: "monApplicationAjax.php?action=proposerVoyage",
-            type: "post",
-            data: {
-                conducteur: $('#proposeVoyage-idVoyageur').val(), 
-                trajet: $('#proposeVoyage-idTrajet').val(), 
-                tarif: $('#case-tarifPropose').val(), 
-                nbPlace: $('#proposeVoyage-nbPlace').val(), 
-                heuredepart: $('#case-heureDepartPropose').val(), 
-                contraintes: $('#case-contraintes').val(), 
-            },
-            success:function(res){
-                $.ajax({
+        if($('#case-tarifPropose').val() && $('#case-heureDepartPropose').val()){
+            $.ajax({
+                url: "monApplicationAjax.php?action=proposerVoyage",
+                type: "post",
+                data: {
+                    conducteur: $('#proposeVoyage-idVoyageur').val(), 
+                    trajet: $('#proposeVoyage-idTrajet').val(), 
+                    tarif: $('#case-tarifPropose').val(), 
+                    nbPlace: $('#proposeVoyage-nbPlace').val(), 
+                    heuredepart: $('#case-heureDepartPropose').val(), 
+                    contraintes: $('#case-contraintes').val(), 
+                },
+                success:function(res){
+                    $.ajax({
+                    url: "monApplicationAjax.php?action=banner",
+                    type: "post",
+                    data:{
+                        message: "Proposition à accepté! ",
+                    },
+                    success:function(reponse){
+                        $.get("monApplicationAjax.php?action=index",function(res){
+                            console.log(res);
+                            $( "#mainContent" ).html(res);
+                        });
+                        $("#banner-notification").html(reponse);
+    
+                            setTimeout(function(){ 
+                                $("#banner-notification").show();
+                            }, 500);
+    
+                            setTimeout(function(){ 
+                                $("#banner-notification").css('display', 'none');
+                            }, 2500);
+    
+                        },
+                    });
+                }
+                
+            });
+        }
+        else{
+            $.ajax({
                 url: "monApplicationAjax.php?action=banner",
                 type: "post",
                 data:{
-                    message: "Proposition à accepté! ",
+                    message: "Tarif et heure depart sont obligatoire !",
+                    criticality: "warning",
+                    title: "error",
                 },
                 success:function(reponse){
-                    $.get("monApplicationAjax.php?action=index",function(res){
-                        console.log(res);
-                        $( "#mainContent" ).html(res);
-                    });
                     $("#banner-notification").html(reponse);
 
                         setTimeout(function(){ 
@@ -83,10 +110,9 @@ style="  box-shadow: 0 1rem 2rem hsl(0 0% 0% / 20%);
                         }, 2500);
 
                     },
-                });
-            }
-            
-        });
+                    error: console.error
+            });
+        }
     })
 
 </script>

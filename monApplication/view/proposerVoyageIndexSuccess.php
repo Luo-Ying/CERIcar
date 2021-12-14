@@ -108,18 +108,44 @@ $('.imgNbVoyageurMoins').click(function(){
     })
 
     $('#btn-proposeSuivant').click(function(){
-        $.ajax({
-            url: "monApplicationAjax.php?action=proposerVoyageSuivant",
-            type: "post",
-            data: {
-                depart: $('#case-departPropose').val(),
-                arrivee: $('#case-arriveePropose').val(),
-                nbPlace: $('#chiffreNbPlaceRestant').html(),
-            },
-            success:function(res){
-                $( "#mainContent" ).html(res);
-            }
-        });
+        if($('#case-departPropose').val() && $('#case-arriveePropose').val() && $('#chiffreNbPlaceRestant').html()>0){
+            $.ajax({
+                url: "monApplicationAjax.php?action=proposerVoyageSuivant",
+                type: "post",
+                data: {
+                    depart: $('#case-departPropose').val(),
+                    arrivee: $('#case-arriveePropose').val(),
+                    nbPlace: $('#chiffreNbPlaceRestant').html(),
+                },
+                success:function(res){
+                    $( "#mainContent" ).html(res);
+                }
+            });
+        }
+        else{
+            $.ajax({
+                url: "monApplicationAjax.php?action=banner",
+                type: "post",
+                data:{
+                    message: "Ville depart, ville arrivee et nombre de place sont obligatoire !",
+                    criticality: "warning",
+                    title: "error",
+                },
+                success:function(reponse){
+                    $("#banner-notification").html(reponse);
+
+                        setTimeout(function(){ 
+                            $("#banner-notification").show();
+                        }, 500);
+
+                        setTimeout(function(){ 
+                            $("#banner-notification").css('display', 'none');
+                        }, 2500);
+
+                    },
+                    error: console.error
+            });
+        }
     })
 
 </script>
