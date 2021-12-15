@@ -74,7 +74,11 @@
         <?php $i=$i+1; ?>
         <?php endif; ?>
     <?php endforeach; ?>
+
+    <p style="margin-left: 35%;">Il n'y a pas de voyage directe? / Le(s) voyage(s) ne vous convenez pas?</p>
+    <button id="btn-searchCorrespondance" type="button" class="login__submit" style="width: 30%; margin-top:0%; margin-left:35%">Chercher voyage correspondance</button>
 </div>
+<br>
 
 <script>
     $('#btn-home').click(function(){

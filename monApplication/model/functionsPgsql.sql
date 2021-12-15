@@ -62,28 +62,37 @@ AS $$
 $$ LANGUAGE plpgsql;
 
 
--- recherche voyages pour correspondance
-DROP FUNCTION IF EXISTS searchVoyageCorrespondance() cascade;
 
-CREATE OR REPLACE FUNCTION searchVoyageCorrespondance(villeDepart VARCHAR, villeArrivee VARCHAR, nbVoyageur integer)
+
+
+
+
+
+-- recherche voyages pour correspondance
+DROP FUNCTION IF EXISTS searchVoyageCorrespondance(villeDepartDebut VARCHAR, villeArriveeFin VARCHAR) cascade;
+
+CREATE OR REPLACE FUNCTION searchVoyageCorrespondance(villeDepartDebut VARCHAR, villeArriveeFin VARCHAR)
 RETURNS table (
-    step integer,
-    IdVoyage integer,
+    stepVoyage integer,
+    IdVoyage VARCHAR,
     villeDepart VARCHAR,
     villeArrivee VARCHAR,
-    heureDepart numeric,
-    heureArrivee numeric,
-    heureAttanteTotal numeric,
-    nbPlaceRestant integer,
-    tarifTotal numeric,
+    heureDepart VARCHAR,
+    heureArrivee VARCHAR,
+    heureAttanteTotal integer,
+    nbPlaceRestant VARCHAR,
+    tarifTotal integer,
     distanceTrajetTotal integer,
-    heureTrajetTotal numeric
+    heureTrajetTotal integer,
+    heureDepartFinal integer,
+    heureArriveeFinal integer,
+    villeArriveeFinal VARCHAR
 )
 AS $$
     BEGIN
         RETURN query
         WITH RECURSIVE tableCorrespondance (
-            step,
+            stepVoyage,
             IdVoyage, 
             villeDepart, 
             villeArrivee, 
@@ -93,46 +102,63 @@ AS $$
             nbPlaceRestant,
             tarifTotal,
             distanceTrajetTotal,
-            heureTrajetTotal
+            heureTrajetTotal,
+            heureDepartFinal,
+            heureArriveeFinal,
+            villeArriveeFinal
         ) 
         AS (
             SELECT 
-            0, 
-            voyage.id,
-            trajet.depart,
-            trajet.arrivee,
-            voyage.heuredepart,
-            cast(round(jabaianb.voyage.heuredepart+(jabaianb.trajet.distance/60)) as integer)%24,
+            1, 
+            CAST(voyage.id as VARCHAR),
+            CAST(trajet.depart as VARCHAR),
+            CAST(trajet.arrivee as VARCHAR),
+            CAST(voyage.heuredepart as VARCHAR),
+            CAST(cast(round(jabaianb.voyage.heuredepart+(jabaianb.trajet.distance/60)) as integer)%24 as VARCHAR),
             0,
-            nbPlaceRestant(voyage.id),
+            CAST(nbPlaceRestant(voyage.id) as VARCHAR),
             voyage.tarif,
             trajet.distance,
-            round(voyage.heuredepart+(trajet.distance/60))-voyage.heuredepart
+            CAST(round(voyage.heuredepart+(trajet.distance/60))-voyage.heuredepart as integer),
+            voyage.heuredepart,
+            cast(round(jabaianb.voyage.heuredepart+(jabaianb.trajet.distance/60)) as integer)%24,
+            jabaianb.trajet.arrivee
             FROM jabaianb.voyage JOIN jabaianb.trajet ON jabaianb.voyage.trajet = jabaianb.trajet.id
-            WHERE jabaianb.trajet.depart = villeDepart
+            WHERE jabaianb.trajet.depart = villeDepartDebut
             UNION
             SELECT 
-            tableCorrespondance.step + 1,
-            tableCorrespondance.id || ", " || suivant.id,
-            tableCorrespondance.villeDepart || ", " || suivant.depart,
-            tableCorrespondance.villeArrivee || ", " || suivant.arrivee,
-            tableCorrespondance.heureDepart || ", " || suivant.heuredepart,
-            tableCorrespondance.heureArrivee || ", " || suivant.heurearrivee,
-            tableCorrespondance.heureAttanteTotal + (suivant.heuredepart - tableCorrespondance.heureArrivee),
-            tableCorrespondance.nbPlaceRestant || ", " || nbPlaceRestant(suivant.id),
+            tableCorrespondance.stepVoyage + 1,
+            tableCorrespondance.IdVoyage || ', ' || CAST(suivant.id as VARCHAR),
+            tableCorrespondance.villeDepart || ', ' || suivant.depart,
+            tableCorrespondance.villeArrivee || ', ' || suivant.arrivee,
+            tableCorrespondance.heureDepart || ', ' || CAST(suivant.heuredepart as VARCHAR),
+            tableCorrespondance.heureArrivee || ', ' || CAST(cast(round(suivant.heuredepart+(suivant.distance/60)) as integer)%24 as VARCHAR),
+            tableCorrespondance.heureAttanteTotal + (suivant.heuredepart - CAST(tableCorrespondance.heureArriveeFinal as integer)),
+            tableCorrespondance.nbPlaceRestant || ', ' || CAST(nbPlaceRestant(suivant.id) as VARCHAR),
             tableCorrespondance.tarifTotal + suivant.tarif,
             tableCorrespondance.distanceTrajetTotal + suivant.distance,
-            tableCorrespondance.heureTrajetTotal + ((suivant.heuredepart - tableCorrespondance.heureArrivee) + (round(suivant.heuredepart+(suivant.distance/60))-suivant.heuredepart)
+            CAST(tableCorrespondance.heureTrajetTotal + (cast(round(suivant.heuredepart+(suivant.distance/60)) as integer)%24 - tableCorrespondance.heureArriveeFinal) as integer),
+            suivant.heuredepart,
+            cast(round(suivant.heuredepart+(suivant.distance/60)) as integer)%24,
+            suivant.arrivee
+            FROM (SELECT jabaianb.voyage.id as id, 
+                        jabaianb.trajet.depart as depart, 
+                        jabaianb.trajet.arrivee as arrivee, 
+                        jabaianb.voyage.heuredepart as heuredepart, 
+                        jabaianb.voyage.tarif as tarif, 
+                        jabaianb.trajet.distance as distance 
+                    FROM jabaianb.voyage JOIN jabaianb.trajet
+                    ON jabaianb.voyage.trajet = jabaianb.trajet.id)
+            AS suivant INNER JOIN tableCorrespondance ON suivant.depart = tableCorrespondance.villeArriveeFinal
+            WHERE tableCorrespondance.villeDepart NOT LIKE '%' || suivant.arrivee || '%'
+            AND tableCorrespondance.heureArriveeFinal < suivant.heuredepart
+            -- AND tableCorrespondance.heureAttanteTotal > 0
+            -- AND tableCorrespondance.heureTrajetTotal > 0 AND tableCorrespondance.heureTrajetTotal <= 24
         )
-        FROM (SELECT voyage.id as id, depart, arrivee, heuredepart, tarif, distance 
-                FROM jabaianb.voyage JOIN jabaianb.trajet
-                ON jabaianb.voyage.trajet = jabaianb.trajet.id)
-        AS suivant INNER JOIN tableCorrespondance ON tableCorrespondance.villeArrivee = suivant.depart
+        SELECT * FROM tableCorrespondance
+            WHERE tableCorrespondance.villeArrivee LIKE '%' || villeArriveeFin AND tableCorrespondance.stepVoyage > 1;
+    END;
+$$ LANGUAGE plpgsql;
 
 
-
-
-
-select 0 as step, voyage.id as idVoyage, trajet.depart as villeDepart, trajet.arrivee as villeArrivee, voyage.heuredepart as heureDepart, cast(round(voyage.heuredepart+(trajet.distance/60)) as integer)%24 as heureArrivee, 0 as heureAttante, nbPlaceRestant(voyage.id) as nbPlaceRestant, voyage.tarif as tarif, trajet.distance as distance, round(voyage.heuredepart+(trajet.distance/60))-voyage.heuredepart as heureTrajetTotal 
-from jabaianb.voyage join jabaianb.trajet on jabaianb.voyage.trajet = jabaianb.trajet.id 
-where trajet.depart = 'Paris' or trajet.arrivee = 'Lyon' and nbPlaceRestant(voyage.id) > 0;
+SELECT searchVoyageCorrespondance('Marseille', 'Toulouse');
