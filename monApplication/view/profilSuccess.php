@@ -37,7 +37,7 @@
                     <div class="voyageCard-conducteur">
                         <div class="voyageCard-conducteur-photo"></div>
                         <div class="voyageCard-conducteur-nom">
-                            <a href="#" id="link-profil-conducteur"><?php echo $voyage->conducteur->nom." ".$voyage->conducteur->prenom ?></a>
+                            <p id="link-profil-conducteur" style="cursor: pointer; border-bottom: 1px solid #000000;"><?php echo $voyage->conducteur->nom." ".$voyage->conducteur->prenom ?></p>
                             <input id="profil-conducteur" value="<?php echo $voyage->conducteur->identifiant ?>" style="display: none;"/>
                         </div>
                     </div>
@@ -84,7 +84,7 @@
                     <div class="voyageCard-conducteur">
                         <div class="voyageCard-conducteur-photo"></div>
                         <div class="voyageCard-conducteur-nom">
-                            <a href="#" id="link-profil-conducteur"><?php echo $voyage->conducteur->nom." ".$voyage->conducteur->prenom ?></a>
+                            <p id="link-profil-conducteur" style="cursor: pointer; border-bottom: 1px solid #000000;"><?php echo $voyage->conducteur->nom." ".$voyage->conducteur->prenom ?></p>
                             <input id="profil-conducteur" value="<?php echo $voyage->conducteur->identifiant ?>" style="display: none;"/>
                         </div>
                     </div>

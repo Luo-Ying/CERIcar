@@ -26,7 +26,7 @@ if($context->getSessionAttribute('userIdChiffre') != NULL){
         <div class="voyageCard-conducteur">
             <div class="voyageCard-conducteur-photo"></div>
             <div class="voyageCard-conducteur-nom">
-                <a href="#" id="link-profil-conducteur"><?php echo $context->pageVoyageConducteur; ?></a>
+                <p id="link-profil-conducteur" style="cursor: pointer; border-bottom: 1px solid #000000;"><?php echo $context->pageVoyageConducteur; ?></p>
                 <input id="profil-conducteur" value="<?php echo $context->pageVoyageConducteurIdentifiant ?>" style="display: none;"/>
             </div>
         </div>

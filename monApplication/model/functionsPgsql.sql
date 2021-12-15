@@ -68,40 +68,71 @@ DROP FUNCTION IF EXISTS searchVoyageCorrespondance() cascade;
 CREATE OR REPLACE FUNCTION searchVoyageCorrespondance(villeDepart VARCHAR, villeArrivee VARCHAR, nbVoyageur integer)
 RETURNS table (
     step integer,
-    IdVoyageCorrespondance integer,
-    villeDepartCorrespondance VARCHAR,
-    villeArriveeCorrespondance VARCHAR,
+    IdVoyage integer,
+    villeDepart VARCHAR,
+    villeArrivee VARCHAR,
     heureDepart numeric,
     heureArrivee numeric,
-    heureAttante numeric,
-    heureTrajetTotal numeric,
-    distanceTrajetTotal integer
-    tarif numeric,
-    nbPlaceRestant integer
+    heureAttanteTotal numeric,
+    nbPlaceRestant integer,
+    tarifTotal numeric,
+    distanceTrajetTotal integer,
+    heureTrajetTotal numeric
 )
 AS $$
     BEGIN
         RETURN query
-        WITH RECURSIVE (
+        WITH RECURSIVE tableCorrespondance (
             step,
-            IdVoyageCorrespondance, 
-            villeDepartCorrespondance, 
-            villeArriveeCorrespondance, 
+            IdVoyage, 
+            villeDepart, 
+            villeArrivee, 
             heureDepart, 
             heureArrivee, 
-            heureAttante,
-            heureTrajetTotal,
+            heureAttanteTotal,
+            nbPlaceRestant,
+            tarifTotal,
             distanceTrajetTotal,
-            tarif,
-            nbPlaceRestant
+            heureTrajetTotal
         ) 
         AS (
             SELECT 
             0, 
-            jabaianb.voyage.id,
-            jabaianb.trajet.depart,
-            jabaianb.trajet.arrivee,
-            jabaianb.voyage.heuredepart,
-            round(jabaianb.voyage.heuredepart+(jabaianb.trajet.distance/60))+(jabaianb.trajet.distance%60)/100,
-             
+            voyage.id,
+            trajet.depart,
+            trajet.arrivee,
+            voyage.heuredepart,
+            cast(round(jabaianb.voyage.heuredepart+(jabaianb.trajet.distance/60)) as integer)%24,
+            0,
+            nbPlaceRestant(voyage.id),
+            voyage.tarif,
+            trajet.distance,
+            round(voyage.heuredepart+(trajet.distance/60))-voyage.heuredepart
+            FROM jabaianb.voyage JOIN jabaianb.trajet ON jabaianb.voyage.trajet = jabaianb.trajet.id
+            WHERE jabaianb.trajet.depart = villeDepart
+            UNION
+            SELECT 
+            tableCorrespondance.step + 1,
+            tableCorrespondance.id || ", " || suivant.id,
+            tableCorrespondance.villeDepart || ", " || suivant.depart,
+            tableCorrespondance.villeArrivee || ", " || suivant.arrivee,
+            tableCorrespondance.heureDepart || ", " || suivant.heuredepart,
+            tableCorrespondance.heureArrivee || ", " || suivant.heurearrivee,
+            tableCorrespondance.heureAttanteTotal + (suivant.heuredepart - tableCorrespondance.heureArrivee),
+            tableCorrespondance.nbPlaceRestant || ", " || nbPlaceRestant(suivant.id),
+            tableCorrespondance.tarifTotal + suivant.tarif,
+            tableCorrespondance.distanceTrajetTotal + suivant.distance,
+            tableCorrespondance.heureTrajetTotal + ((suivant.heuredepart - tableCorrespondance.heureArrivee) + (round(suivant.heuredepart+(suivant.distance/60))-suivant.heuredepart)
         )
+        FROM (SELECT voyage.id as id, depart, arrivee, heuredepart, tarif, distance 
+                FROM jabaianb.voyage JOIN jabaianb.trajet
+                ON jabaianb.voyage.trajet = jabaianb.trajet.id)
+        AS suivant INNER JOIN tableCorrespondance ON tableCorrespondance.villeArrivee = suivant.depart
+
+
+
+
+
+select 0 as step, voyage.id as idVoyage, trajet.depart as villeDepart, trajet.arrivee as villeArrivee, voyage.heuredepart as heureDepart, cast(round(voyage.heuredepart+(trajet.distance/60)) as integer)%24 as heureArrivee, 0 as heureAttante, nbPlaceRestant(voyage.id) as nbPlaceRestant, voyage.tarif as tarif, trajet.distance as distance, round(voyage.heuredepart+(trajet.distance/60))-voyage.heuredepart as heureTrajetTotal 
+from jabaianb.voyage join jabaianb.trajet on jabaianb.voyage.trajet = jabaianb.trajet.id 
+where trajet.depart = 'Paris' or trajet.arrivee = 'Lyon' and nbPlaceRestant(voyage.id) > 0;
