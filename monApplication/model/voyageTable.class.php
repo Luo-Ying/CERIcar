@@ -67,6 +67,18 @@ class voyageTable{
         return $nbPlaceRestant[0]["nbplacerestant"];
     }
 
+    public static function getCorrespondanceVoyagesByDepartArrivee($depart, $arrivee){
+        $em = dbconnection::getInstance()->getEntityManager();
+
+		// $sql = "SELECT * from correspondances('$trajet->depart','$trajet->arrivee',$seats)";
+        $sql = "SELECT * FROM searchVoyageCorrespondance('$depart', '$arrivee')";
+		$stmt = $em->getConnection()->prepare($sql);
+		$stmt->execute();
+        $tableCorrespondance = $stmt->fetchAll();
+        // var_dump($nbPlaceRestant);
+        return $tableCorrespondance;
+    }
+
 
     public static function proposerVoyage($conducteurVoyageProposer, 
         $trajetVoyageProposer, 

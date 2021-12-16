@@ -1,24 +1,6 @@
-<input id="searchCorrespondance-villeDepart" value="<?php echo $context->trajet->depart ?>" style="display: none;"/>
-<input id="searchCorrespondance-villeArrivee" value="<?php echo $context->trajet->arrivee ?>" style="display: none;"/>
-
 
 <div class="w3-card">
-    <div style="padding-left: 450px;">
-    <br>
-        <p> 
-            <?php
-                $voyageNonDisponible = 0;
-                foreach($context->voyages as $voyage){
-                    if($voyage->nbPlaceRestant == 0){
-                        $voyageNonDisponible += 1;
-                    }
-                }
-                $nbVoyageDisponible = sizeof($context->voyages) - $voyageNonDisponible;
-            ?>
-            <?php echo $nbVoyageDisponible ?>
-            <?php if($nbVoyageDisponible > 1){echo "voyages";}else{echo "voyage";}?> disponibles
-        </p>
-    </div>
+    <!-- <div style="padding-left: 450px;"> -->
     <input id="pageVoyage-isConnected" value="<?php 
         if($context->getSessionAttribute('userId') != NUll){
             echo "yes";
@@ -26,10 +8,15 @@
             echo "no";
         }
     ?>" style="display: none;"/>
-    <?php foreach( $context->voyages as $voyage ): ?>
-        <?php if($voyage->nbPlaceRestant > 0): ?>
-        <br>
-        <div class="itemVoyage" style="cursor: pointer;">
+    <?php foreach($context->tabCorrespondance as $correspondance): ?>
+        <?php foreach(explode(',',$correspondance['idvoyage']) as $id ): ?>
+                <?php 
+                    $idVoyage = (int)$id; 
+                    $voyage = voyageTable::getVoyagesById($idVoyage);
+                    $nbPlaceRestant = voyageTable::getNbPlaceRestantByIdVoyage($idVoyage);
+                ?>
+                <br>
+                <div class="itemVoyage" style="cursor: pointer;">
             <div class="voyageCard-mainContainer" style="cursor:pointer"> 
                 <div class="voyageCard-main">
                     <div class="voyageCard-trajet">
@@ -43,11 +30,11 @@
                         </div>
                         <div class="barHeuresTrajet"></div>
                         <div class="voyageCardTrajetVilleDepart&Arrivee">
-                            <p><?php echo $context->trajet->depart ?></p>
-                            <input id="pageVoyage-villeDepart" value="<?php echo $context->trajet->depart ?>" style="display: none;"/>
+                            <p><?php echo $voyage->trajet->depart ?></p>
+                            <input id="pageVoyage-villeDepart" value="<?php echo $voyage->trajet->depart ?>" style="display: none;"/>
                             <br>
-                            <p><?php echo $context->trajet->arrivee ?></p>
-                            <input id="pageVoyage-villeArrivee" value="<?php echo $context->trajet->arrivee ?>" style="display: none;"/>
+                            <p><?php echo $voyage->trajet->arrivee ?></p>
+                            <input id="pageVoyage-villeArrivee" value="<?php echo $voyage->trajet->arrivee ?>" style="display: none;"/>
                         </div>
                     </div>
                     <div class="voyageCard-conducteur">
@@ -66,26 +53,29 @@
                 <div class="voyageCard-tarif">
                     <?php echo $voyage->tarif."€" ?>
                     <input id="pageVoyage-tarif" value="<?php echo $voyage->tarif."€" ?>" style="display: none;"/>
-                    <input id="pageVoyage-nbPlaceRestant" value="<?php echo $voyage->nbPlaceRestant; ?>" style="display: none;"/>
+                    <input id="pageVoyage-nbPlaceRestant" value="<?php echo $nbPlaceRestant; ?>" style="display: none;"/>
                 </div>
             </div>
             <div class="voyageCard-nbPlaceRestant">
-                <span>nombre places restatnt: </span> <?php echo $voyage->nbPlaceRestant; ?>
+                <span>nombre places restatnt: </span> <?php echo $nbPlaceRestant; ?>
             </div>
         </div>
-        <br><br><br>
-        <?php $i=$i+1; ?>
-        <?php endif; ?>
+        <?php endforeach; ?>
+        <br><br>
+        <div style="position:relative;
+  font-size:16px;
+  color:#999;
+  overflow:hidden;
+  text-align:center;">*********************************</div>
+        <br><br><br><br>
     <?php endforeach; ?>
-
-    <p style="margin-left: 35%;">Il n'y a pas de voyage directe? / Le(s) voyage(s) ne vous convenez pas?</p>
-    <button id="btn-searchCorrespondance" type="button" class="login__submit" style="width: 30%; margin-top:0%; margin-left:35%">Chercher voyage correspondance</button>
 </div>
-<br>
+
+
 
 <script>
 
-    $('.itemVoyage').click(function(){
+$('.itemVoyage').click(function(){
         // console.log($(this).closest('.voyageCard-mainContainer').find('#pageVoyage-contraintes'));
         if($('#pageVoyage-isConnected').val() == "yes"){
             // console.log($(this).closest('.itemVoyage').find('#pageVoyage-nbPlaceRestant').val());
@@ -137,65 +127,4 @@
         }
     });
 
-
-    $('#link-profil-conducteur').click(function(){
-        if($('#pageVoyage-isConnected').val() == "yes"){
-            $.ajax({
-            url: "monApplicationAjax.php?action=profil",
-            type: "post",
-            data: {
-                identifiant: $('#pageVoyage-conducteur-identifiant').val()
-            },
-            success:function(reponse){
-                $("#mainContent").html(reponse);
-            }
-            });
-        }
-        else{
-            $.ajax({
-            url: "monApplicationAjax.php?action=banner",
-            type: "post",
-            data: {
-                "message":"Connectez-vous pour réalité cette action !", 
-                "criticality":"warning",
-                "title":"error"
-            },
-            success:function(reponse){
-                $("#banner-notification").html(reponse);
-
-                setTimeout(function(){ 
-                    $("#banner-notification").show();
-                }, 500);
-
-                setTimeout(function(){ 
-                    $("#banner-notification").css('display', 'none');
-                }, 2500);
-
-                },
-                error: console.error
-            });
-        }
-    })
-
-    $('#btn-searchCorrespondance').click(function(){
-        $.ajax({
-            url: "monApplicationAjax.php?action=searchVoyageCorrespondance",
-            type: "post",
-            data: {
-                depart: $('#searchCorrespondance-villeDepart').val(),
-                arrivee:  $('#searchCorrespondance-villeArrivee').val()
-            },
-            success:function(reponse){
-                
-                $("#mainContent").html(reponse);
-
-            },
-            error: console.error
-        });
-    })
-
-
 </script>
-
-
-

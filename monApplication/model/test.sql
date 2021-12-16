@@ -44,7 +44,8 @@ WITH RECURSIVE tableCorrespondance (
     heureTrajetTotal,
     heureDepartFinal,
     heureArriveeFinal,
-    villeArriveeFinal
+    villeArriveeFinal,
+    nbPlaceRestantLast
 ) 
 AS (
     SELECT 
@@ -61,7 +62,8 @@ AS (
     round(voyage.heuredepart+(trajet.distance/60))-voyage.heuredepart,
     voyage.heuredepart,
     cast(round(jabaianb.voyage.heuredepart+(jabaianb.trajet.distance/60)) as integer)%24,
-    jabaianb.trajet.arrivee
+    jabaianb.trajet.arrivee,
+    nbPlaceRestant(voyage.id)
     FROM jabaianb.voyage JOIN jabaianb.trajet ON jabaianb.voyage.trajet = jabaianb.trajet.id
     WHERE jabaianb.trajet.depart = 'Marseille'
     UNION
@@ -79,7 +81,8 @@ AS (
     tableCorrespondance.heureTrajetTotal + (cast(round(suivant.heuredepart+(suivant.distance/60)) as integer)%24 - tableCorrespondance.heureArriveeFinal),
     suivant.heuredepart,
     cast(round(suivant.heuredepart+(suivant.distance/60)) as integer)%24,
-    suivant.arrivee
+    suivant.arrivee,
+    nbPlaceRestant(suivant.id)
     FROM (SELECT jabaianb.voyage.id as id, 
                 jabaianb.trajet.depart as depart, 
                 jabaianb.trajet.arrivee as arrivee, 
@@ -91,6 +94,7 @@ AS (
     AS suivant INNER JOIN tableCorrespondance ON suivant.depart = tableCorrespondance.villeArriveeFinal
     WHERE tableCorrespondance.villeDepart NOT LIKE '%' || suivant.arrivee || '%'
     AND tableCorrespondance.heureArriveeFinal < suivant.heuredepart
+    AND tableCorrespondance.nbPlaceRestantLast > 0
 )
 SELECT stepVoyage,
         villeArrivee,
@@ -101,4 +105,5 @@ SELECT stepVoyage,
         distanceTrajetTotal,
         heureTrajetTotal
     FROM tableCorrespondance
-    WHERE tableCorrespondance.villeArrivee LIKE '%Toulouse' AND tableCorrespondance.stepVoyage > 1;
+    WHERE tableCorrespondance.villeArrivee LIKE '%Toulouse' AND tableCorrespondance.stepVoyage > 1
+    And tableCorrespondance.nbPlaceRestantLast > 0;

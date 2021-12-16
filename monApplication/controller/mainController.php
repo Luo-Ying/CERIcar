@@ -214,6 +214,22 @@ class mainController
 		return context::SUCCESS;
 	}
 
+	public static function searchVoyageCorrespondance($request, $context){
+		if(isset($request['depart']) && isset($request['arrivee'])){
+			$context->tabCorrespondance = voyageTable::getCorrespondanceVoyagesByDepartArrivee($request['depart'], $request['arrivee']);
+			// var_dump($context->tabCorrespondance);
+			// foreach($context->tabCorrespondance as $correspondance){
+			// 	foreach( explode(',',$correspondance['idvoyage']) as $id){
+			// 		// echo $id."<br>";
+			// 		// echo gettype((int)$id);
+			// 	}
+			// }
+
+			return context::SUCCESS;
+		}
+		return context::ERROR;
+	}
+
 	public static function pageReservationVoyage($request, $context){
 		if( isset($request['idVoyage'])
 		&& isset($request['heureDepart']) 
