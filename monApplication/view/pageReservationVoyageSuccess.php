@@ -1,10 +1,11 @@
-
+<!-- stocker le data de idVoyage et idUser qui sont envoye par page avant -->
 <input id="pageReservationVoyage-idVoyage" value="<?php echo $context->pageVoyageIdVoyage; ?>" style="display: none;"/>
 <input id="pageReservationVoyage-idVoyageur" value="<?php 
 if($context->getSessionAttribute('userIdChiffre') != NULL){
     echo $context->getSessionAttribute('userIdChiffre'); 
 }
 ?>" style="display: none;"/>
+
 
 
 <div style="padding-top: 5%;">

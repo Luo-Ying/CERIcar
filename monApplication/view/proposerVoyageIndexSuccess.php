@@ -1,17 +1,22 @@
-<div class="cardProposerVoyage"
-style="  box-shadow: 0 1rem 2rem hsl(0 0% 0% / 20%);
-  background: hsl(0 0% 100%);
-  color: hsl(200 50% 20%);
-  line-height: 1.5;
-  font-size: 1.5rem;
-  font-weight: 300;
-  width: 70vmin;
-  height: 65vmin;
-  padding: 3ch;
-  border-radius: 2ch;
-  border: 1px solid hsl(0 0% 83%);
-  margin-left:34%;
-  margin-top:5%;">
+<style>
+    /* .cardProposerVoyage{
+        box-shadow: 0 1rem 2rem hsl(0 0% 0% / 20%);
+        background: hsl(0 0% 100%);
+        color: hsl(200 50% 20%);
+        line-height: 1.5;
+        font-size: 1.5rem;
+        font-weight: 300;
+        width: 70vmin;
+        height: 65vmin;
+        padding: 3ch;
+        border-radius: 2ch;
+        border: 1px solid hsl(0 0% 83%);
+        margin-left:34%;
+        margin-top:5%;
+    } */
+</style>
+
+<div class="cardProposerVoyage">
 
     <div style="display: flex; flex-direction:column;">
     <br>
@@ -40,7 +45,7 @@ style="  box-shadow: 0 1rem 2rem hsl(0 0% 0% / 20%);
                 <div class="mois">
                     <img src="./images/moinsGray.png" class="imgNbVoyageurMoins" >
                 </div>
-                <div id="chiffreNbPlaceRestant" style="font-size: 35px;margin-left: 30%;width:4px;">0</div>
+                <div id="chiffreNbPlaceRestant">0</div>
                 <input id="nbMaxPlaceRestant" value="8" style="display: none;"/>
                 <div class="plus">
                     <img src="./images/plus.png" class="imgNbVoyageurPlus" >

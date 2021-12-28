@@ -2,6 +2,7 @@
 <div class="w3-card">
     <!-- <div style="padding-left: 450px;"> -->
     <input id="pageVoyage-isConnected" value="<?php 
+    // var_dump($context->tabCorrespondance);
         if($context->getSessionAttribute('userId') != NUll){
             echo "yes";
         }else{
@@ -62,6 +63,9 @@
         </div>
         <?php endforeach; ?>
         <br><br>
+        <p style="margin-left: 60%;">Heure trajet totale: <?php echo $correspondance["heuretrajettotal"] ?>h</p>
+        <p style="margin-left: 60%;">Tarif trajet totale: <?php echo $correspondance["tariftotal"] ?>€</p>
+        <br>
         <div style="position:relative;
   font-size:16px;
   color:#999;

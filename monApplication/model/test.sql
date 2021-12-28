@@ -30,6 +30,11 @@ WHERE tableTrajetTest.villeArrivee LIKE '%Montpellier';
 
 
 
+
+
+
+-- requete psql
+
 WITH RECURSIVE tableCorrespondance (
     stepVoyage,
     IdVoyage, 

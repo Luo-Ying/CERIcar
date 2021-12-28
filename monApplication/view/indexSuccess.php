@@ -3,7 +3,7 @@
     </div>
     <div class="w3-display-middle">
         <h1 class="w3-jumbo w3-animate-top">CERI CAR</h1>
-        <hr class="w3-border-grey" style="margin:auto;width:40%">
+        <hr class="w3-border-grey">
         <p class="w3-large w3-center">Didi, good travel!</p>
         <input type="text" id="case-depart" name="depart" placeholder="Départ"><br>
         <input type="text" id="case-destination" name="arrivee" placeholder="Destination"><br>
