@@ -1,4 +1,6 @@
 
+    <!-- view: index -->
+
     <div class="w3-display-topleft w3-padding-large w3-xlarge">
     </div>
     <div class="w3-display-middle">
@@ -12,12 +14,12 @@
 
 <script>
     // <-- methode GET -->
+
+    /**
+     * fonction ajax to send the information of name city when the user click the button "searche"
+     */
     $('#btn-Rechercher-voyages').click(function () {
         if(($('#case-depart').val() != "") && ($('#case-destination').val() != "")){
-            // $.get("monApplicationAjax.php?action=searchVoyages&depart="+$('#case-depart').val()+"&arrivee="+$('#case-destination').val(), function(dataVoyage){
-            //     console.log(dataVoyage);
-            //     $( "#mainContent" ).html(dataVoyage);
-            // });
             $.ajax({
             url: "monApplicationAjax.php?action=searchVoyages",
             type: "post",
@@ -60,8 +62,11 @@
 
     })
 
+
+    /**
+     * button home
+     */
     $('#btn-home').click(function(){
-        // console.log('ok');
         $.get("monApplicationAjax.php?action=index",function(res){
             console.log(res);
             $( "#mainContent" ).html(res);

@@ -1,6 +1,10 @@
 
+<!-- view: profilpage -->
+
 <div>
 
+    <!-- information was send by the page previous for display the page of user -->
+    
     <div style="display: flex; flex-direction:row; position: relative; padding-left: 2%;">
         <?php if($context->user->identifiant != $context->getSessionAttribute('userId')): ?>
             <div><img src="./images/conducteurTest.jpg"></div>

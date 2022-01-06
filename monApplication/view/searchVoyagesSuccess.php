@@ -1,3 +1,7 @@
+<!-- view: page of list of trips -->
+
+
+<!-- information was send by the button of Index when the user enter the name of city of depart and arrival -->
 <input id="searchCorrespondance-villeDepart" value="<?php echo $context->trajet->depart ?>" style="display: none;"/>
 <input id="searchCorrespondance-villeArrivee" value="<?php echo $context->trajet->arrivee ?>" style="display: none;"/>
 

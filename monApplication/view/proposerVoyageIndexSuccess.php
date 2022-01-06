@@ -1,20 +1,6 @@
-<style>
-    /* .cardProposerVoyage{
-        box-shadow: 0 1rem 2rem hsl(0 0% 0% / 20%);
-        background: hsl(0 0% 100%);
-        color: hsl(200 50% 20%);
-        line-height: 1.5;
-        font-size: 1.5rem;
-        font-weight: 300;
-        width: 70vmin;
-        height: 65vmin;
-        padding: 3ch;
-        border-radius: 2ch;
-        border: 1px solid hsl(0 0% 83%);
-        margin-left:34%;
-        margin-top:5%;
-    } */
-</style>
+
+
+<!-- view: page of propose trip 1 -->
 
 <div class="cardProposerVoyage">
 
@@ -25,10 +11,8 @@
                 <label>From : </label>
                 <br>
                 <label>To : </label>
-                <!-- <input id="case-departPropose" type="text" class="login__input name" /> -->
             </div>
             <div style="display: flex; flex-direction:column;">
-                <!-- <label>To :</label> -->
                 <input id="case-departPropose" type="text" class="login__input name" style="color: black;"/>
                 <br>
                 <input id="case-arriveePropose" type="text" class="login__input name" style="color: black;"/>
@@ -50,7 +34,6 @@
                 <div class="plus">
                     <img src="./images/plus.png" class="imgNbVoyageurPlus" >
                 </div>
-                <!-- <div class="moins"></div> -->
             </div>
         </div>
         <br><br>
@@ -61,16 +44,19 @@
 
 <script>
 
+
+/*
+ * set number of passenger(voyageur)
+ * moins -
+ * plus +
+ */
+
 $('.imgNbVoyageurMoins').click(function(){
-        // var imgMois = "<img src='./images/moins.png' class='imgNbVoyageurMoins' >";
-        // var imgMoisGray = "<img src='./images/moinsGray.png' class='imgNbVoyageurMoins' >";
-        // var src = $('.imgNbVoyageurMoins')[0].src;
         var t = $("#chiffreNbPlaceRestant");
         console.log(t.html());
         var value = parseInt(t.html());
         if(value > 0){
             t.html(parseInt(t.html()) - 1);
-            // $('.mois').innerHTML = imgMois;
             if((value-1) == 0){
                 $('.imgNbVoyageurMoins').attr("src", "./images/moinsGray.png");
             }
@@ -80,24 +66,17 @@ $('.imgNbVoyageurMoins').click(function(){
             $('.imgNbVoyageurPlus').attr("src", "./images/plus.png");
         }
         else{
-            // $('.mois').innerHTML = imgMoisGray;
             $('.imgNbVoyageurMoins').attr("src", "./images/moinsGray.png");
         }
     })
 
     $('.imgNbVoyageurPlus').click(function(){
-        // var imgPlus = "<img src='./images/plus.png' class='imgNbVoyageurMoins' >";
-        // var imgPlusGray = "<img src='./images/plusGray.png' class='imgNbVoyageurMoins' >";
         var t = $("#chiffreNbPlaceRestant");
-        // console.log(t.val());
-        // console.log(t.html());
         var value = parseInt(t.html());
         var max = $('#nbMaxPlaceRestant').val();
         console.log(max);
         if(value < max){
-            // console.log("pass");
             t.html(parseInt(t.html()) + 1);
-            // $('.plus').innerHTML = imgPlus;
             if((value+1) == max){
                 $('.imgNbVoyageurPlus').attr("src", "./images/plusGray.png");
             }
@@ -107,11 +86,12 @@ $('.imgNbVoyageurMoins').click(function(){
             }
         }
         else{
-            // $('.plus').innerHTML = imgPlusGray;
             $('.imgNbVoyageurPlus').attr("src", "./images/plusGray.png");
         }
     })
 
+
+    //go to the next form
     $('#btn-proposeSuivant').click(function(){
         if($('#case-departPropose').val() && $('#case-arriveePropose').val() && $('#chiffreNbPlaceRestant').html()>0){
             $.ajax({

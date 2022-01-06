@@ -1,69 +1,62 @@
 <?php
 
+
+/**
+ * les reservations de voyage
+ */
+
+
 require_once "reservation.class.php";
 
 class reservationTable{
 
+    /**
+     * fonction for get all reservations of trip with objetct voyage
+     */
     public static function getReservationByVoyage($voyage){
 
-        // echo $voyage->trajet->id;
         $em = dbconnection::getInstance()->getEntityManager();
         $reservationRepository = $em->getRepository('reservation');
         
         $reservations = $reservationRepository->findBy(
             array('voyage' => $voyage->id)
         );
-        // echo "<br>ok<br>";
-        // echo $reservation->id;
         if($reservations == false){
-            echo "Erreur sql";
         }
 
         return $reservations;
 
     }
 
+    /**
+     * fonction for get all reservations of trip with if of voyage
+     */
     public static function getReservationByVoyageur($idVoyageur){
 
-        // echo $voyage->trajet->id;
         $em = dbconnection::getInstance()->getEntityManager();
         $reservationRepository = $em->getRepository('reservation');
         
-        // echo var_dump()
         $reservations = $reservationRepository->findBy(
             array('voyageur' => $idVoyageur)
         );
-        // echo "ok";
-        // echo "<br>ok<br>";
-        // echo var_dump($reservations[0]->id);
         if($reservations == false){
-            echo "Erreur sql";
         }
-        //echo var_dump($reservations);
 
         return $reservations;
 
     }
 
+
+    /**
+     * fonction for tha action to reserve a trip (add a new reservation into data base)
+     */
     public static function reserveVoyage($voyageReservation, $voyageurReservation){
 
-		// $em = dbconnection::getInstance()->getEntityManager();
-		// $reservation = new reservation();
-
-		// $reservation->voyage = $voyageReservation;
-		// $reservation->voyageur = $voyageurReservation;
-
-		// $em->persist($reservation);
-		// $em->flush();
         $em = dbconnection::getInstance()->getEntityManager();
 
-		// $sql = "SELECT * from correspondances('$trajet->depart','$trajet->arrivee',$seats)";
         $sql = "SELECT reserveVoyage('$voyageReservation', '$voyageurReservation')";
 		$stmt = $em->getConnection()->prepare($sql);
 		$stmt->execute();
-        // $nbPlaceRestant = $stmt->fetchAll();
-        // // var_dump($nbPlaceRestant);
-        // return $nbPlaceRestant[0]["nbplacerestant"];
 	}
     
 }

@@ -1,3 +1,5 @@
+<!-- view: page of propose trip 2 -->
+
 <input id="proposeVoyage-idVoyageur" value="<?php echo $context->getSessionAttribute('userIdChiffre'); ?>" style="display: none;"/>
 <input id="proposeVoyage-idTrajet" value="<?php echo $context->trajetProposer->id; ?>" style="display: none;"/>
 <input id="proposeVoyage-nbPlace" value="<?php echo $context->nbPlace; ?>" style="display: none;"/>

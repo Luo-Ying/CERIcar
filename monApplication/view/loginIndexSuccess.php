@@ -1,4 +1,6 @@
 
+<!-- view: loginIndex -->
+
   <div class="demo">
     <div class="login">
       <div class="login__check"><i class="fas fa-user fa-10x"></i></div>
@@ -67,7 +69,6 @@
     }
 
     $("#btn-connecter").click(function(){
-        // event.prenventDefault();
         if($('#case-identifiant').val() && $('#case-pass').val()){
             $.ajax({
                 url: "monApplicationAjax.php?action=checkLogin",
@@ -78,7 +79,6 @@
                 },
                 success: function(data) {
                     if(data.indexOf("is_login:true") >= 0){
-                        // console.log("ok");
                         $.get("monApplicationAjax.php?action=header",function(data){
                             console.log();
                             $( "#header" ).html(data);

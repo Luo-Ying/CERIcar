@@ -1,3 +1,5 @@
+<!-- view: page of register -->
+
 <div class="demo-register">
     <div class="login">
       <div class="login__check">
@@ -7,7 +9,6 @@
                 <div class="login_row">
                     <div class="custom-file">
                         <input id="case-newUserAvatar" type="file" class=" name" id="image" value="Choisir l'image">
-                        <!-- <label class="custom-file-label" id="imageLabel" for="image"></label> -->
                     </div>
                 </div>
                 <br>
@@ -18,7 +19,7 @@
                     <input id="case-newUserName" type="text" class="login__input name" placeholder="Username" oninput="return userNameValidation(this.value)"/>
                 </div>
                 <div id="warning-userNameExist" style="color: red; display:none; ">Le Username existe déja</div>
-                <!-- <div></div> -->
+                
                 <div class="login__row">
                     <svg class="login__icon name svg-icon" viewBox="0 0 20 20">
                         <path d="M0,20 a10,8 0 0,1 20,0z M10,0 a4,4 0 0,1 0,8 a4,4 0 0,1 0,-8" />

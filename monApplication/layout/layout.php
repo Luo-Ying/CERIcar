@@ -7,8 +7,6 @@
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no"> -->
-  <!-- <link rel="stylesheet" type="text/css" media="screen and (max-device-width: 400px)" href="../css/local.css" /> -->
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
   <link rel="stylesheet" href="https://7npmedia.w3cschool.cn/w3.css">
@@ -21,6 +19,10 @@
  
 
 <style>
+
+/**
+ * css for the screen of mobile
+ */
 
 @media only screen and (max-width:600px) {
   body {
@@ -190,15 +192,20 @@
 
   <div class="bgimg w3-display-container w3-animate-opacity w3-text-white">
 
+
+  <!-- part of header -->
   <div id="header">
     <?php include($nameApp."/view/headerSuccess.php"); ?>
   </div>
   
+
+  <!-- part of banner -->
    <div id="banner-notification">
      <?php include($nameApp."/view/bannerSuccess.php"); ?>
    </div>
 
 
+   <!-- part of main page -->
   <div id="page-mainContent">
     <?php if($context->error): ?> 
       <div id="flash_error" class="error">

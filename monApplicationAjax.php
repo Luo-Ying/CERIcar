@@ -1,14 +1,14 @@
 <?php
 
+/**
+ * expres page for ajax functions
+ */
+
 error_reporting(0); 
 
-//nom de l'application
 $nameApp = "monApplication";
 
-//action par défaut
 $action = "index";
-// $action = "helloWorld";
-// $action = "BE";
 
 if(key_exists("action", $_REQUEST))
 $action =  $_REQUEST['action'];
@@ -35,8 +35,6 @@ if($view===false)
 //inclusion du layout qui va lui meme inclure le template view
 elseif($view!=context::NONE)
 {
-	// $template_view=$nameApp."/view/".$action.$view.".php";
-	// include($nameApp."/layout/".$context->getLayout().".php");
 	include($nameApp."/view/".$action.$view.".php");
 }
 

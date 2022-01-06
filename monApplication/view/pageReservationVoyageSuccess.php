@@ -55,7 +55,6 @@ if($context->getSessionAttribute('userIdChiffre') != NULL){
         <div class="plus">
             <img src="./images/plus.png" class="imgNbVoyageurPlus" >
         </div>
-        <!-- <div class="moins"></div> -->
     </div>
     <button id="btn-reserverVoyage" type="button" class="reserverVoyage">Réserver</button>
 </div>
@@ -63,16 +62,19 @@ if($context->getSessionAttribute('userIdChiffre') != NULL){
 
 <script>
 
+
+    /*
+    * set number of passenger(voyageur)
+    * moins -
+    * plus +
+    */
+
     $('.imgNbVoyageurMoins').click(function(){
-        // var imgMois = "<img src='./images/moins.png' class='imgNbVoyageurMoins' >";
-        // var imgMoisGray = "<img src='./images/moinsGray.png' class='imgNbVoyageurMoins' >";
-        // var src = $('.imgNbVoyageurMoins')[0].src;
         var t = $("#chiffreNbPlaceRestant");
         console.log(t.html());
         var value = parseInt(t.html());
         if(value > 0){
             t.html(parseInt(t.html()) - 1);
-            // $('.mois').innerHTML = imgMois;
             if((value-1) == 0){
                 $('.imgNbVoyageurMoins').attr("src", "./images/moinsGray.png");
             }
@@ -82,24 +84,17 @@ if($context->getSessionAttribute('userIdChiffre') != NULL){
             $('.imgNbVoyageurPlus').attr("src", "./images/plus.png");
         }
         else{
-            // $('.mois').innerHTML = imgMoisGray;
             $('.imgNbVoyageurMoins').attr("src", "./images/moinsGray.png");
         }
     })
 
     $('.imgNbVoyageurPlus').click(function(){
-        // var imgPlus = "<img src='./images/plus.png' class='imgNbVoyageurMoins' >";
-        // var imgPlusGray = "<img src='./images/plusGray.png' class='imgNbVoyageurMoins' >";
         var t = $("#chiffreNbPlaceRestant");
-        // console.log(t.val());
-        // console.log(t.html());
         var value = parseInt(t.html());
         var max = $('#nbMaxPlaceRestant').val();
         console.log(max);
         if(value < max){
-            // console.log("pass");
             t.html(parseInt(t.html()) + 1);
-            // $('.plus').innerHTML = imgPlus;
             if((value+1) == max){
                 $('.imgNbVoyageurPlus').attr("src", "./images/plusGray.png");
             }
@@ -109,10 +104,13 @@ if($context->getSessionAttribute('userIdChiffre') != NULL){
             }
         }
         else{
-            // $('.plus').innerHTML = imgPlusGray;
             $('.imgNbVoyageurPlus').attr("src", "./images/plusGray.png");
         }
     })
+
+    /**
+     * send the information of traveler
+     */
 
     $('#btn-reserverVoyage').click(function(){
         if(parseInt($('#chiffreNbPlaceRestant').html()) > 0){

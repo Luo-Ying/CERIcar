@@ -5,10 +5,7 @@ error_reporting(0);
 //nom de l'application
 $nameApp = "monApplication";
 
-//action par défaut
 $action = "index";
-// $action = "helloWorld";
-// $action = "BE";
 
 if(key_exists("action", $_REQUEST))
 $action =  $_REQUEST['action'];

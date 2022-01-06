@@ -1,8 +1,9 @@
 
+<!-- view: page of correspondings -->
+
 <div class="w3-card">
-    <!-- <div style="padding-left: 450px;"> -->
+    <!-- check if the user connected -->
     <input id="pageVoyage-isConnected" value="<?php 
-    // var_dump($context->tabCorrespondance);
         if($context->getSessionAttribute('userId') != NUll){
             echo "yes";
         }else{
@@ -79,10 +80,12 @@
 
 <script>
 
+
+/*
+ * send the information of trip to controller of reservation of trip
+ */
 $('.itemVoyage').click(function(){
-        // console.log($(this).closest('.voyageCard-mainContainer').find('#pageVoyage-contraintes'));
         if($('#pageVoyage-isConnected').val() == "yes"){
-            // console.log($(this).closest('.itemVoyage').find('#pageVoyage-nbPlaceRestant').val());
             $.ajax({
             url: "monApplicationAjax.php?action=pageReservationVoyage",
             type: "post",

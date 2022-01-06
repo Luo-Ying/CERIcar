@@ -1,4 +1,6 @@
 
+    <!-- view: header -->
+
     <div class="nav" >
       <div class="case-nav w3-container">
           <button type="submit" id="btn-home" class=" w3-bar-item w3-button w3-hover-black w3-border-white w3-bottombar w3-hover-border-gray">Home</button>

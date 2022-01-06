@@ -1,11 +1,17 @@
 <?php
 
+/**
+ * Database voyage object
+ */
+
 require_once "voyage.class.php";
 
 class voyageTable{
 
+    /**
+     * fonction for get voyage with 'trajet'
+     */
     public static function getVoyagesByTrajet($trajet){
-        // echo "<br>", $trajet->id,"<br>";
         $em = dbconnection::getInstance()->getEntityManager();
         $voyageRepository = $em->getRepository('voyage');
         
@@ -13,34 +19,31 @@ class voyageTable{
             array('trajet' => $trajet->id),
             array('heureDepart' => 'ASC')
         );
-        // echo "<br>ok<br>";
 
         if($voyages == false){
-            // echo 'Erreur sql';
         }
         return $voyages;
     }
 
+
+    /**
+     * fonction for get voyage with 'id'
+     */
     public static function getVoyagesById($idVoyage){
         $em = dbconnection::getInstance()->getEntityManager();
         $voyageRepository = $em->getRepository('voyage');
         
-        // $voyage = $voyageRepository->findBy(
-        //     // array('trajet' => $trajet->id),
-        //     // array('heureDepart' => 'ASC')
-            
-        // );
         $voyage = $voyageRepository->findOneBy(array('id' => $idVoyage));
-        // echo "<br>ok<br>";
-        // echo var_dump($voyage);
 
         if($voyage == false){
-            echo 'Erreur sql';
         }
         return $voyage;
     }
 
 
+    /**
+     * fonction for get voyage with 'conducteur'
+     */
     public static function getVoyageByConducteur($idConducteur){
         $em = dbconnection::getInstance()->getEntityManager();
         $propositionVoyageRepository = $em->getRepository('voyage');
@@ -55,31 +58,41 @@ class voyageTable{
         return $propositionVoyage;
     }
 
+    /**
+     * @param idVoyage
+     * fonction for get number of places remaining with param 'idVoyage'
+     * call the function of psql nbPlaceRestant('$idVoyage')
+     */
     public static function getNbPlaceRestantByIdVoyage($idVoyage){
         $em = dbconnection::getInstance()->getEntityManager();
 
-		// $sql = "SELECT * from correspondances('$trajet->depart','$trajet->arrivee',$seats)";
         $sql = "SELECT nbPlaceRestant('$idVoyage')";
 		$stmt = $em->getConnection()->prepare($sql);
 		$stmt->execute();
         $nbPlaceRestant = $stmt->fetchAll();
-        // var_dump($nbPlaceRestant);
         return $nbPlaceRestant[0]["nbplacerestant"];
     }
 
+    /**
+     * @param depart
+     * @param arrivee
+     * fonction for get all correspondings with param ''depart' and 'arrivee'
+     * call the function of psql searchVoyageCorrespondance('$depart', '$arrivee')
+     */
     public static function getCorrespondanceVoyagesByDepartArrivee($depart, $arrivee){
         $em = dbconnection::getInstance()->getEntityManager();
 
-		// $sql = "SELECT * from correspondances('$trajet->depart','$trajet->arrivee',$seats)";
         $sql = "SELECT * FROM searchVoyageCorrespondance('$depart', '$arrivee')";
 		$stmt = $em->getConnection()->prepare($sql);
 		$stmt->execute();
         $tableCorrespondance = $stmt->fetchAll();
-        // var_dump($nbPlaceRestant);
         return $tableCorrespondance;
     }
 
 
+    /**
+     * fonction for propose a trip , add a new trip into data base
+     */
     public static function proposerVoyage($conducteurVoyageProposer, 
         $trajetVoyageProposer, 
         $tarifVoyageProposer,
@@ -87,12 +100,6 @@ class voyageTable{
         $heuredepartVoyageProposer,
         $contraintesVoyageProposer){
         
-        // echo $conducteurVoyageProposer;
-        // echo $trajetVoyageProposer;
-        // echo $tarifVoyageProposer;
-        // echo $nbPlaceVoyageProposer;
-        // echo $heuredepartVoyageProposer;
-        // echo $contraintesVoyageProposer;
         $em = dbconnection::getInstance()->getEntityManager();
 
         $sql = "SELECT proposerVoyage('$conducteurVoyageProposer', 
